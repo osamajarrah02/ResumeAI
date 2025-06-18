@@ -1,0 +1,315 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<Doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="description" content="Woody - Creative Coming Soon HTML5 Template">
+        <meta name="keywords" content="Woody, coming soon page, html5, responsive">
+        <meta name="author" content="Mountain-Themes">
+
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Aldrich' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Raleway:400,500,600' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" type="text/css" href="~/css/HomeCSS/animate.css">
+        <link rel="stylesheet" href="~/fonts/all.min.css" />
+        <link rel="stylesheet" type="text/css" href="~/css/HomeCSS/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="~/css/HomeCSS/style.css">
+        <link rel="stylesheet" type="text/css" href="~/css/HomeCSS/Section.css">
+        <link rel="shortcut icon" href="images/favicon.ico">
+    </head>
+    <body>
+        <header>
+            <div class="container">
+                <div class="social-icons">
+                    <ul>
+                        <li><a href="https://www.youtube.com/" target="_blank" title="YouTube"><i aria-hidden="true" class="fa-brands fa-youtube"></i></a></li>
+                        <li><a href="https://www.twitter.com/" target="_blank" title="Twitter"><i aria-hidden="true" class="fa-brands fa-twitter"></i></a></li>
+                        <li><a href="https://facebook.com/" target="_blank" title="Facebook"><i aria-hidden="true" class="fa-brands fa-facebook"></i></a></li>
+                        <li><a href="https://www.dribbble.com/" target="_blank" title="Dribbble"><i aria-hidden="true" class="fa-brands fa-dribbble"></i></a></li>
+                        <li><a href="https://www.instagram.com/" target="_blank" title="Instagram"><i aria-hidden="true" class="fa-brands fa-instagram"></i></a></li>
+                    </ul>
+                </div>
+                <h1 class="logo typed">🗹 SkillSet</h1>
+                <div class="typed">Build Your Future with SkillSet.</div>
+                <p>Professional resumes crafted effortlessly.<br>Let your skills shine with AI-enhanced templates.</p>
+                <div class="mouse-wrapper">
+                    <div class="mouse">
+                        <a href="#resume-builder">
+                            <span>scroll</span>
+                            <i class="fa fa-chevron-down"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div id="effect-box">
+                <canvas id="gravity"></canvas>
+            </div>
+        </header>
+        <section id="resume-builder" class="tool-section py-5">
+            <div class="container text-center">
+                <h2 class="display-5 fw-bold wow fadeInUp">AI Tools That Do the Work for You</h2>
+                <p class="lead text-muted wow fadeInUp" data-wow-delay="0.2s">
+                    From resumes to portfolios — everything you need to stand out.
+                </p>
+                <div class="row mt-5">
+                    <div class="col-md-6 col-lg-3 mb-4 wow zoomIn" onclick="showTool('resume')">
+                        <div class="tool-card p-4 shadow-sm h-100 rounded">
+                            <i class="fa-solid fa-file-alt fa-2x mb-3 text-primary"></i>
+                            <h5>Resume Builder</h5>
+                            <p>Generate a job-winning resume with AI precision.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 mb-4 wow zoomIn" onclick="showTool('portfolio')" data-wow-delay="0.1s">
+                        <div class="tool-card p-4 shadow-sm h-100 rounded">
+                            <i class="fa-solid fa-briefcase fa-2x mb-3 text-success"></i>
+                            <h5>Portfolio Creator</h5>
+                            <p>Design stunning portfolios to show off your work.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 mb-4 wow zoomIn" onclick="showTool('email')" data-wow-delay="0.2s">
+                        <div class="tool-card p-4 shadow-sm h-100 rounded">
+                            <i class="fa-solid fa-envelope fa-2x mb-3 text-danger"></i>
+                            <h5>Email Writer</h5>
+                            <p>Craft cold emails and replies with a single click.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 mb-4 wow zoomIn" onclick="showTool('coverletter')" data-wow-delay="0.3s">
+                        <div class="tool-card p-4 shadow-sm h-100 rounded">
+                            <i class="fa-solid fa-file-signature fa-2x mb-3 text-warning"></i>
+                            <h5>Cover Letter Generator</h5>
+                            <p>Generate personalized letters tailored to each job.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-5" id="tool-output">
+                    <p class="lead text-dark wow fadeInUp">Click any tool to learn more.</p>
+                </div>
+            </div>
+        </section>
+        <section class="resume-preview-section position-relative">
+            <div class="resume-preview-wrapper">
+                <div class="floating-box left-box">
+                    <div class="bg-white rounded shadow p-3 small">
+                        <strong>AI Keyword Targeting</strong> <span class="badge bg-secondary ms-1">v2</span>
+                        <ul class="list-unstyled mt-2">
+                            <li>✅ Startup Consultant</li>
+                            <li>✅ SaaS Software</li>
+                            <li>✅ Strategic Objectives</li>
+                            <li>✅ Advisory Board</li>
+                            <li>❌ Capital Strategy</li>
+                            <li>❌ Operational Budget</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="floating-box color-box-selector">
+                    <div class="colors d-flex gap-2 flex-wrap bg-white p-2 rounded shadow-sm">
+                        <div class="color-box" style="background:#fff;" data-bg="#fff" data-text="#000000"></div>
+                        <div class="color-box" style="background:#ff5e5e;" data-bg="#ff5e5e" data-text="#ffffff"></div>
+                        <div class="color-box" style="background:#ffaa00;" data-bg="#ffaa00" data-text="#000000"></div>
+                        <div class="color-box" style="background:#00c4ff;" data-bg="#00c4ff" data-text="#000000"></div>
+                        <div class="color-box" style="background:#8c54ff;" data-bg="#8c54ff" data-text="#ffffff"></div>
+                        <div class="color-box" style="background:#000000;" data-bg="#000000" data-text="#ffffff"></div>
+                    </div>
+                </div>
+                <div class="resume-card bg-white rounded shadow p-4 mx-auto">
+                    <h4 class="text-primary fw-bold">Charles Bloomberg</h4>
+                    <div class="text-muted small mb-3">
+                        📍 Seoul, South Korea · charlesbloomberg@gmail.com · 📞 (321) 779-5544 · 🔗 linkedin.com/in/cbloomberg
+                    </div>
+
+                    <h6 class="text-uppercase fw-bold mt-4">Professional Summary</h6>
+                    <p class="mb-3 text-muted">
+                        Passion for building inspiring companies... <span class="text-success">startup consultant</span>.
+                    </p>
+
+                    <h6 class="text-uppercase fw-bold">Professional Experience</h6>
+                    <div class="mb-3">
+                        <strong>CEO & Founder | SkillSet</strong> — <small>Aug 2015 - Present, Seoul</small>
+                        <ul class="small text-muted mb-2">
+                            <li>Launched SkillSet, a renowned AI resume builder SaaS platform.</li>
+                            <li>Maintained robust <span class="text-info">financial structure</span>, supporting growth to $4.5M revenue.</li>
+                            <li>Built an <span class="text-primary">advisory board</span> to guide strategic decisions.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="container mt-5 text-center">
+                    <p class="text-muted small">Used by a quickly growing number of diverse organizations</p>
+                    <div class="d-flex flex-wrap justify-content-center gap-4 mt-3">
+                    <img src="https://cdn.prod.website-files.com/62f0854c1cef28185535ab61/66552f088bba6c1f428ab864_9d0e1d6a-d84e-44f5-b72f-22e5e4d2181e.svg" alt="Korea" height="30">
+                    <img src="https://cdn.prod.website-files.com/62f0854c1cef28185535ab61/682ecdab9edb209387e07d13_Color_Horizontal_Logo_BMAGroup.webp" alt="BMA Group" height="30">
+                    <img src="https://cdn.prod.website-files.com/62f0854c1cef28185535ab61/66552f068bba6c1f428ab617_c2fe.svg" alt="resumAI" height="30">
+                    <img src="https://cdn.prod.website-files.com/62f0854c1cef28185535ab61/66552f068bba6c1f428ab737_d503c802-94f4-4328-f8cc-0dc9a2adbba9.png" alt="Merit America" height="30">
+                </div>
+                </div>
+            </div>
+        </section>
+        <section class="testimonial-section pt-3 pb-4">
+            <div class="container text-center">
+                <div class="bg-light rounded p-4 shadow-sm mb-5">
+                    <div class="mb-3 text-warning fs-4">★★★★★</div>
+                    <p class="lead fw-semibold">
+                        SkillSet is an awesome AI-based resume builder that includes templates to help you design a resume
+                        that is sure to check the boxes when it comes to applicant tracking systems.
+                        This is a great jumping off point to kickstart a new resume.
+                    </p>
+                    <div class="d-flex justify-content-center align-items-center mt-4 gap-2">
+                        <img src="https://cdn.prod.website-files.com/62f0854c1cef28185535ab61/62f234609576fd6631345cff_0x0.webp" alt="Ashley Stahl" class="rounded-circle" width="50" height="50">
+                        <div>
+                            <strong>Ashley Stahl</strong><br>
+                            <small class="text-muted">Career Contributor</small>
+                        </div>
+                        <img src="https://cdn.prod.website-files.com/62f0854c1cef28185535ab61/62f23d25df04387270eab787_Forbes_logo.svg" alt="Forbes" height="30" class="ms-3">
+                    </div>
+                </div>
+
+                <div class="row justify-content-center text-center">
+                    <div class="col-12 col-sm-4 mb-3">
+                        <div class="bg-white p-3 shadow-sm rounded">
+                            <small class="text-muted">Total Users (this is annoying to update)</small>
+                            <h5 class="text-primary fw-bold mb-0">3,365,312</h5>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-4 mb-3">
+                        <div class="bg-white p-3 shadow-sm rounded">
+                            <small class="text-muted">Interview Rate</small>
+                            <h5 class="text-primary fw-bold mb-0">62.18%</h5>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-4 mb-3">
+                        <div class="bg-white p-3 shadow-sm rounded">
+                            <small class="text-muted">Avg. User Review</small>
+                            <h5 class="text-primary fw-bold mb-0">8.23/10</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="ai-demo-section">
+            <div class="container text-center">
+                <p class="small text-primary fw-bold">The smartest AI for resume & cover letter writing</p>
+                <h2 class="display-5 fw-bold text-white">
+                    Resume + cover letter ready in 5 minutes. <span class="highlight">Perfectly optimized.</span>
+                </h2>
+                <p class="text-light mb-5">No job interview callbacks? Maybe your resume isn’t up to par. Let SkillSet AI help you. Our AI tools follow best practices and understand what kind of skills and experience employers need, so it can help you write an amazing resume in minutes.</p>
+
+                <div class="video-card shadow">
+                    <video autoplay muted loop playsinline class="video-player">
+                        <source src="your-video.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </section>
+        <section class="pricing-section">
+            <div class="container text-center">
+                <p class="text-primary fw-semibold mb-2">Respectful pricing</p>
+                <h2 class="fw-bold mb-2">Choose From The Most Popular Plans</h2>
+                <p class="text-muted mb-5">Satisfaction promised with a 100% money back guarantee</p>
+                <div class="pricing-cards">
+                    <div class="pricing-card">
+                        <h5 class="text-muted">No card required</h5>
+                        <p class="mb-3">Get a feel for how it works. No payment required.</p>
+                        <hr />
+                        <h3 class="plan-price">Free</h3>
+                        <button class="btn-outline">Get started</button>
+                    </div>
+                    <div class="pricing-card featured">
+                        <h5 class="text-light">$29 Monthly</h5>
+                        <p class="text-light mb-3">Access to all features plus unlimited AI Credits & free monthly review.</p>
+                        <hr class="divider-light" />
+                        <h3 class="plan-price text-white">Pro</h3>
+                        <button class="btn-filled">Get started</button>
+                        <div class="guarantee text-light mt-2">
+                            <i class="fa fa-check-circle text-success me-1"></i> 100% money-back guarantee
+                        </div>
+                    </div>
+                    <div class="pricing-card">
+                        <h5 class="text-muted">$149 One-Time</h5>
+                        <p class="mb-3">Access to all features with a one-time payment.</p>
+                        <hr />
+                        <h3 class="plan-price">Lifetime</h3>
+                        <button class="btn-outline">Get started</button>
+                        <div class="guarantee text-muted mt-2">
+                            <i class="fa fa-check-circle text-success me-1"></i> 100% money-back guarantee
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="resume-preview-section">
+            <div class="resume-preview-wrapper">
+                <!-- Simulated Sidebar Preview -->
+                <div style="position: absolute; left: -280px; top: 0; width: 250px; background: #431e74; color: #fff; padding: 2rem; border-radius: 10px;">
+                    <div style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1.5rem;">SkillSet</div>
+                    <button class="create-resume-btn">CREATE NEW RESUME</button>
+                    <ul style="list-style: none; padding: 0; font-size: 0.9rem; line-height: 1.8;">
+                        <li>MY DASHBOARD</li>
+                        <li>SAMPLE LIBRARY <span style="background:#00f0a8; color:#000; font-size:0.65rem; padding:2px 4px; border-radius: 4px;">NEW</span></li>
+                        <li>REVIEW MY RESUME</li>
+                        <li>AI INTERVIEW</li>
+                        <li>RMS REVIEWS</li>
+                    </ul>
+                </div>
+
+                <!-- Static Resume Cards -->
+                <div style="margin-left: 0;">
+                    <h2 class="display-5 fw-bold text-center mb-5">Static Resume Dashboard Preview</h2>
+                    <div class="d-flex flex-wrap justify-content-center gap-4">
+                        <div class="resume-card bg-white rounded shadow p-3" style="width: 250px; pointer-events: none;">
+                            <div class="text-muted small">Available on Feb 16, 2024</div>
+                            <div class="fw-bold">My First Resume</div>
+                        </div>
+                        <div class="resume-card bg-white rounded shadow p-3" style="width: 250px; pointer-events: none;">
+                            <div class="fw-bold">Marketing Resume</div>
+                        </div>
+                        <div class="resume-card bg-white rounded shadow p-3" style="width: 250px; pointer-events: none;">
+                            <div class="fw-bold">Software Developer</div>
+                        </div>
+                        <div class="resume-card bg-white rounded shadow p-3" style="width: 250px; pointer-events: none;">
+                            <div class="fw-bold">Test</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Floating Static Resume Image -->
+                <div class="floating-box" style="top: -100px; right: -120px;">
+                    <img src="~/Images/logoSkillSet.png"
+                         alt="Static Resume"
+                         style="width: 280px; transform: rotate(-3deg); border-radius: 8px; box-shadow: 0 12px 24px rgba(0,0,0,0.15); pointer-events: none;">
+                </div>
+            </div>
+        </section>
+        <script>
+            function showTool(type) {
+              const descriptions = {
+                resume: "AI builds a tailored resume in seconds. Add skills, experience, and export with one click.",
+                portfolio: "Create stunning AI-generated portfolios to showcase your best work visually and interactively.",
+                email: "Craft professional cold emails or follow-ups instantly — tone and formatting handled by AI.",
+                coverletter: "Write compelling cover letters targeted to job descriptions with smart personalization.",
+              };
+              document.getElementById("tool-output").innerHTML = `<p class="lead">${descriptions[type]}</p>`;
+            }
+        </script>
+        <script src="~/js/HomeJS/jquery.js"></script>
+        <script src="~/js/HomeJS/jquery.backstretch.min.js"></script>
+        <script src="~/js/HomeJS/jquery.countdown.js"></script>
+        <script src="~/js/HomeJS/jquery.validate.js"></script>
+        <script src="~/js/HomeJS/jquery.mb.YTPlayer.min.js"></script>
+        <script src="~/js/HomeJS/jquery.ajaxchimp.js"></script>
+        <script src="~/js/HomeJS/wow.min.js"></script>
+        <script src="~/js/HomeJS/jquery.countTo.min.js"></script>
+        <script src="~/js/HomeJS/jquery.appear.min.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAV1KS10sb3O462XosfZTKohHJwi6C0joo"></script>
+        <script src="~/js/HomeJS/gravity.js"></script>
+        <script src="~/js/HomeJS/main.js"></script>
+        <script src="~/js/HomeJS/Section.js"></script>
+    </body>
+</html>

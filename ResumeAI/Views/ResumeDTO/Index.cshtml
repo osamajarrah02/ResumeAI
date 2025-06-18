@@ -1,0 +1,24 @@
+﻿@model ResumeAI.DTOs.ResumeDTO
+
+<h1>@Model.PersonFirstName</h1>
+<h1>@Model.PersonLastName</h1>
+
+@if (!string.IsNullOrEmpty(Model.ImageBase64))
+{
+    <div style="width: 150px; height: 150px; border-radius: 50%; overflow: hidden; border: 2px solid #ccc; margin-bottom: 10px;">
+        <img src="data:image/png;base64,@Model.ImageBase64" alt="Profile Image"
+             style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+    </div>
+}
+else
+{
+    <p>No profile image uploaded.</p>
+}
+
+<form asp-action="Index" method="post" enctype="multipart/form-data">
+    <div>
+        <label for="ImageFile">Upload New Profile Image:</label>
+        <input type="file" name="ImageFile" />
+    </div>
+    <button type="submit">Upload</button>
+</form>

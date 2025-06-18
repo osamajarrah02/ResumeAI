@@ -1,0 +1,142 @@
+﻿@model ResumeAI.DTOs.ResumeDTO
+
+@{
+    ViewData["Title"] = "My Generated Resume";
+    Layout = null;
+}
+
+<!Doctype html>
+<html>
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="container my-5 animate__animated animate__fadeIn">
+            <div class="bg-white p-4 rounded shadow-lg">
+                <h2 class="text-center fw-bold mb-4">@Model.FirstName @Model.SecondName @Model.LastName</h2>
+                <p class="text-center">@Model.JobTitle</p>
+                <hr />
+
+                <div class="row mb-3 text-center">
+                    <div class="col-md-3">
+                        <p><strong>Email:</strong> @Model.Email</p>
+                    </div>
+                    <div class="col-md-3">
+                        <p><strong>Phone:</strong> @Model.PhoneNumber</p>
+                    </div>
+                    <div class="col-md-3">
+                        <p><strong>Date of Birth:</strong> @Model.DateOfBirth</p>
+                    </div>
+                    <div class="col-md-3">
+                        <p><strong>Address:</strong> @Model.Address</p>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <h4 class="text-primary">Summary</h4>
+                    <p>@Model.Summary</p>
+                </div>
+
+                @if (Model.Educations?.Any() == true)
+                {
+                    <div class="mb-4">
+                        <h4 class="text-primary">Education</h4>
+                        <ul class="list-group">
+                            @foreach (var edu in Model.Educations)
+                            {
+                                <li class="list-group-item">
+                                    <strong>@edu.Degree</strong> in @edu.FieldOfStudy at @edu.InstitutionName
+                                    <br /><small>@edu.StartDate - @edu.EndDate | GPA: @edu.GPA</small>
+                                    <br />@edu.Description
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+
+                @if (Model.Experiences?.Any() == true)
+                {
+                    <div class="mb-4">
+                        <h4 class="text-primary">Experience</h4>
+                        <ul class="list-group">
+                            @foreach (var exp in Model.Experiences)
+                            {
+                                <li class="list-group-item">
+                                    <strong>@exp.JobTitle</strong> at @exp.CompanyName (@exp.EmploymentType)
+                                    <br /><small>@exp.StartDate - @exp.EndDate | @exp.CompanyLocation</small>
+                                    <br />@exp.Description
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+
+                @if (Model.Certificates?.Any() == true)
+                {
+                    <div class="mb-4">
+                        <h4 class="text-primary">Certificates</h4>
+                        <ul class="list-group">
+                            @foreach (var cert in Model.Certificates)
+                            {
+                                <li class="list-group-item">
+                                    <strong>@cert.CourseName</strong> - @cert.InstitutionName (@cert.CertificateType)
+                                    <br /><small>@cert.StartDate - @cert.EndDate | GPA: @cert.GPA</small>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+
+                @if (Model.Skills?.Any() == true)
+                {
+                    <div class="mb-4">
+                        <h4 class="text-primary">Skills</h4>
+                        <ul class="list-inline">
+                            @foreach (var skill in Model.Skills)
+                            {
+                                <li class="list-inline-item badge rounded-pill bg-secondary p-2 m-1">
+                                    @skill.SkillName (@skill.SkillCategory)
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+
+                @if (Model.Languages?.Any() == true)
+                {
+                    <div class="mb-4">
+                        <h4 class="text-primary">Languages</h4>
+                        <ul class="list-inline">
+                            @foreach (var lang in Model.Languages)
+                            {
+                                <li class="list-inline-item badge rounded-pill bg-info text-dark p-2 m-1">
+                                    @lang.LanguageName (@lang.ProficiencyLevel)
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+
+                @if (Model.Links?.Any() == true)
+                {
+                    <div class="mb-4">
+                        <h4 class="text-primary">Links</h4>
+                        <ul class="list-group">
+                            @foreach (var link in Model.Links)
+                            {
+                                <li class="list-group-item">
+                                    <a href="@link.LinkUrl" target="_blank">@link.LinkName</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+
+                <div class="text-center mt-4">
+                    <a href="@Url.Action("Index")" class="btn btn-outline-primary">Back to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

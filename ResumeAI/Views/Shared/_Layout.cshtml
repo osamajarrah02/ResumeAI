@@ -1,0 +1,203 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Modern Navbar - ResumeAI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        /* Transparent navbar with backdrop blur */
+        nav.navbar {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: saturate(180%) blur(15px);
+            -webkit-backdrop-filter: saturate(180%) blur(15px);
+            transition: background-color 0.4s ease, box-shadow 0.4s ease;
+            box-shadow: none;
+        }
+
+            nav.navbar.scrolled {
+                background: rgba(255, 255, 255, 0.85);
+                box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            }
+
+        /* Nav links style */
+        .nav-link {
+            font-weight: 600;
+            color: #222;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+            .nav-link::after {
+                content: '';
+                position: absolute;
+                left: 0;
+                bottom: -6px;
+                width: 0%;
+                height: 3px;
+                background: #5a67d8; /* Indigo-ish accent */
+                border-radius: 3px;
+                transition: width 0.3s ease;
+            }
+
+            .nav-link:hover,
+            .nav-link:focus {
+                color: #5a67d8;
+            }
+
+                .nav-link:hover::after,
+                .nav-link:focus::after {
+                    width: 100%;
+                }
+
+        /* SkillSet + Website name container */
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: #5a67d8;
+            user-select: none;
+            cursor: default;
+            margin-left: 1.5rem;
+        }
+
+        .skillset {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #444;
+            margin-right: 1rem;
+            user-select: none;
+        }
+
+        /* User profile circle container */
+        .profile-container {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            margin-left: 2rem;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.25s ease;
+        }
+
+            .profile-container:hover {
+                transform: scale(1.05);
+            }
+
+        .profile-img {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #5a67d8;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .profile-container:hover .profile-img {
+            box-shadow: 0 0 8px 2px #5a67d8;
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            font-size: 0.9rem;
+            color: #333;
+            font-weight: 600;
+            line-height: 1.1;
+        }
+
+        .profile-username {
+            white-space: nowrap;
+        }
+
+        .profile-points {
+            font-size: 0.8rem;
+            color: #5a67d8;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        @@media (max-width: 768px) {
+            .skillset
+
+        {
+            display: none;
+        }
+
+        .navbar-brand {
+            margin-left: 0.5rem;
+        }
+
+        .profile-container {
+            margin-left: 1rem;
+        }
+
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container px-4">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="Identity/Account/Register">Creator</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Contact Us</a></li>
+            </ul>
+            <div class="dropdown">
+                <a class="d-flex align-items-center text-decoration-none dropdown-toggle profile-container"
+                   href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="https://i.pravatar.cc/42" alt="User Profile Image" class="profile-img" />
+                    <div class="profile-info">
+                        @{
+                            var firstName = User.FindFirst("FirstName")?.Value ?? "Guest";
+                            var lastName = User.FindFirst("LastName")?.Value ?? "";
+                            var points = User.FindFirst("Points")?.Value ?? "0";
+                        }
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <span class="profile-username">@firstName @lastName</span>
+                            <span class="profile-points">Spoints: @points</span>
+                        }
+                        else
+                        {
+                            <span class="profile-username">Guest</span>
+                            <span class="profile-points">Spoints: 0</span>
+                        }
+                    </div>
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-end text-small shadow">
+                    <li><a class="dropdown-item" href="/Settings">Settings</a></li>
+                    <li><a class="dropdown-item" href="/Profile">Profile</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <form method="post" asp-area="Identity" asp-page="/Account/Logout" id="logoutForm">
+                            <button type="submit" class="dropdown-item">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        window.addEventListener('scroll', () => {
+          const navbar = document.querySelector('nav.navbar');
+          if(window.scrollY > 15) {
+            navbar.classList.add('scrolled');
+          } else {
+            navbar.classList.remove('scrolled');
+          }
+        });
+    </script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
