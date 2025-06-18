@@ -1,0 +1,21 @@
+﻿@model ResumeAI.DTOs.PortfolioDTO
+
+<!Doctype html>
+<html>
+	<head></head>
+	<body style="box-sizing: border-box;">
+		<input hidden asp-for="@Model.UserId">
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<h1>Full Name: @Model.PersonFirstName, @Model.PersonLastName</h1>
+		<a class="btn btn-outline-dark" asp-controller="PortFolioDTO" asp-action="Add">Add PortFolio</a>
+	</body>
+</html>

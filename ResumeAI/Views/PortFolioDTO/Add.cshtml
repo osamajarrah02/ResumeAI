@@ -1,0 +1,86 @@
+﻿@model ResumeAI.DTOs.PortfolioDTO
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Create Portfolio</title>
+</head>
+<body style="box-sizing: border-box;">
+    <form asp-action="Create" asp-controller="PortFolioDTO" method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="UserId" />
+
+        <label asp-for="FirstName">First Name</label>
+        <input asp-for="FirstName" />
+        <span asp-validation-for="FirstName"></span>
+
+        <label asp-for="SecondName">Second Name</label>
+        <input asp-for="SecondName" />
+        <span asp-validation-for="SecondName"></span>
+
+        <label asp-for="ThirdName">Third Name</label>
+        <input asp-for="ThirdName" />
+        <span asp-validation-for="ThirdName"></span>
+
+        <label asp-for="Email">Email</label>
+        <input asp-for="Email" />
+        <span asp-validation-for="Email"></span>
+
+        <label asp-for="PhoneNumber">Phone Number</label>
+        <input asp-for="PhoneNumber" />
+        <span asp-validation-for="PhoneNumber"></span>
+
+        <label asp-for="Address">Address</label>
+        <input asp-for="Address" />
+        <span asp-validation-for="Address"></span>
+
+        <label asp-for="PortFolioImage">Choose Image</label>
+        <input asp-for="PortFolioImage" type="file" />
+        <span asp-validation-for="PortFolioImage"></span>
+
+        <label asp-for="JobTitle">Job Title</label>
+        <input asp-for="JobTitle" />
+        <span asp-validation-for="JobTitle"></span>
+
+        <label asp-for="DateOfBirth">Date of Birth</label>
+        <input asp-for="DateOfBirth" type="date" />
+        <span asp-validation-for="DateOfBirth"></span>
+
+        <label asp-for="Summary">Summary</label>
+        <textarea asp-for="Summary"></textarea>
+        <span asp-validation-for="Summary"></span>
+
+        <h3>Services</h3>
+        <div>
+            <input asp-for="Services[0].ServiceName" placeholder="Service Title" />
+            <span asp-validation-for="Services[0].ServiceName"></span>
+
+            <input asp-for="Services[0].ServiceDescription" placeholder="Service Description" />
+            <span asp-validation-for="Services[0].ServiceDescription"></span>
+        </div>
+
+        <h3>Projects</h3>
+        <div>
+            <input asp-for="Projects[0].ProjectName" placeholder="Project Name" />
+            <span asp-validation-for="Projects[0].ProjectName"></span>
+
+            <input asp-for="Projects[0].ProjectDescription" placeholder="Project Description" />
+            <span asp-validation-for="Projects[0].ProjectDescription"></span>
+
+            <input asp-for="Projects[0].ProjectAttachments" placeholder="Project Attachments" />
+            <span asp-validation-for="Projects[0].ProjectAttachments"></span>
+
+            <input asp-for="Projects[0].ProjectLink" placeholder="Project Link" />
+            <span asp-validation-for="Projects[0].ProjectLink"></span>
+        </div>
+
+        <button type="submit">Create</button>
+    </form>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>

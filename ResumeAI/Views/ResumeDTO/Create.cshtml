@@ -1,0 +1,69 @@
+﻿@model ResumeAI.DTOs.ResumeDTO
+
+@{
+    ViewData["Title"] = "Build Your Resume";
+}
+
+<!Doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+    </head>
+    <body>
+        <div class="container mt-5">
+            <h2 class="text-center mb-4">Resume Builder Wizard</h2>
+            <form asp-action="Create" method="post">
+                <div id="resumeWizard">
+                    <div class="step">
+                        <h4>Personal Information</h4>
+                        <div class="mb-3"><input class="form-control" name="FirstName" placeholder="First Name" required /></div>
+                        <div class="mb-3"><input class="form-control" name="SecondName" placeholder="Second Name" /></div>
+                        <div class="mb-3"><input class="form-control" name="LastName" placeholder="Last Name" required /></div>
+                        <div class="mb-3"><input class="form-control" name="Email" placeholder="Email" required /></div>
+                        <div class="mb-3"><input class="form-control" name="PhoneNumber" placeholder="Phone Number" required /></div>
+                        <div class="mb-3"><input class="form-control" name="JobTitle" placeholder="Job Title" required /></div>
+                        <div class="mb-3"><input class="form-control" name="DateOfBirth" placeholder="Date of Birth" type="date" /></div>
+                        <div class="mb-3"><input class="form-control" name="Address" placeholder="Address" /></div>
+                        <div class="mb-3"><textarea class="form-control" name="Summary" placeholder="Professional Summary" rows="3"></textarea></div>
+                    </div>
+                    <div class="step d-none">
+                        <h4>Education</h4>
+                        <div id="educationsContainer"></div>
+                        <button type="button" class="btn btn-outline-primary mb-3" onclick="addEducation()">+ Add Education</button>
+                    </div>
+                    <div class="step d-none">
+                        <h4>Experience</h4>
+                        <div id="experiencesContainer"></div>
+                        <button type="button" class="btn btn-outline-primary mb-3" onclick="addExperience()">+ Add Experience</button>
+                    </div>
+                    <div class="step d-none">
+                        <h4>Skills</h4>
+                        <div id="skillsContainer"></div>
+                        <button type="button" class="btn btn-outline-primary mb-3" onclick="addSkill()">+ Add Skill</button>
+
+                        <h4 class="mt-4">Languages</h4>
+                        <div id="languagesContainer"></div>
+                        <button type="button" class="btn btn-outline-primary mb-3" onclick="addLanguage()">+ Add Language</button>
+                    </div>
+                    <div class="step d-none">
+                        <h4>Certificates</h4>
+                        <div id="certificatesContainer"></div>
+                        <button type="button" class="btn btn-outline-primary mb-3" onclick="addCertificate()">+ Add Certificate</button>
+
+                        <h4 class="mt-4">Links</h4>
+                        <div id="linksContainer"></div>
+                        <button type="button" class="btn btn-outline-primary mb-3" onclick="addLink()">+ Add Link</button>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
+                        <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
+                        <button type="submit" class="btn btn-success d-none" id="submitBtn">Generate Resume</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        @section Scripts {
+            <script src="~/js/CreateJS/Details.js"></script>
+        }
+    </body>
+</html>

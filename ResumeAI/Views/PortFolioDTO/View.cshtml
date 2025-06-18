@@ -1,0 +1,29 @@
+﻿@model ResumeAI.DTOs.PortfolioDTO
+
+<h1>@Model.FirstName @Model.SecondName @Model.ThirdName</h1>
+<p><strong>Email:</strong> @Model.Email</p>
+<p><strong>Phone:</strong> @Model.PhoneNumber</p>
+<p><strong>Job Title:</strong> @Model.JobTitle</p>
+<p><strong>Summary:</strong> @Model.Summary</p>
+<p><strong>Address:</strong> @Model.Address</p>
+<p><strong>Date of Birth:</strong> @Model.DateOfBirth</p>
+
+<h2>Services</h2>
+<ul>
+    @foreach (var service in Model.Services)
+    {
+        <li>
+            <strong>@service.ServiceName</strong> - @service.ServiceDescription
+        </li>
+    }
+</ul>
+
+<h2>Projects</h2>
+<ul>
+    @foreach (var project in Model.Projects)
+    {
+        <li>
+            <strong>@project.ProjectName</strong> - @project.ProjectDescription - @project.ProjectAttachments - @project.ProjectLink
+        </li>
+    }
+</ul>
