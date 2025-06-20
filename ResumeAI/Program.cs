@@ -1,6 +1,7 @@
 using HTU_FinalProject.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.SemanticKernel;
 using ResumeAI.Data;
 using ResumeAI.Interfaces;
@@ -25,17 +26,21 @@ namespace ResumeAI
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<IResume, ResumeService>();
-            builder.Services.AddScoped<IResumeParser, ResumeParser>();
-            builder.Services.AddScoped<IPortfolioService, MyService.PortfolioService>();
-            builder.Services.AddScoped<IPortfolioParser, PortFolioParser>();
+            builder.Services.AddScoped<IPortfolioService, PortfolioService>();
+            builder.Services.AddScoped<ICreateEmail, EmailService>();
+            builder.Services.AddScoped<ICoverLetter, CoverLetterService>();
 
             var key = builder.Configuration["OpenAI:Key"];
             builder.Services.AddSingleton<Kernel>(sp =>
             {
                 var kernelBuilder = Kernel.CreateBuilder();
-                kernelBuilder.AddOpenAIChatCompletion("gpt-4", key!);
+                kernelBuilder.AddOpenAIChatCompletion("gpt-4", key);
                 return kernelBuilder.Build();
             });
+            builder.Services.AddScoped<IResumeParser, ResumeParser>();
+            builder.Services.AddScoped<IPortfolioParser, PortFolioParser>();
+            builder.Services.AddScoped<ICreateEmailParser, EmailParser>();
+            builder.Services.AddScoped<ICoverLetterParser, CoverLetterParser>();
 
             var app = builder.Build();
 

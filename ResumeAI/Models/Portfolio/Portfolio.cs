@@ -11,8 +11,8 @@ namespace ResumeAI.Models.Portfolio
         public List<Project> Projects { get; set; }
         public string UserId { get; set; }
         public User User { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime ModifiedDate { get; set; }
+        public string? CreatedDate { get; set; }
+        public string? ModifiedDate { get; set; }
         public bool IsDeleted { get; set; }
     }
 }

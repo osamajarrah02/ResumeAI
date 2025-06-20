@@ -167,8 +167,8 @@ namespace ResumeAI.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("EndDate")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PortfolioId")
                         .HasColumnType("int");
@@ -192,8 +192,8 @@ namespace ResumeAI.Data.Migrations
                     b.Property<int?>("ServiceId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("StartDate")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -202,6 +202,236 @@ namespace ResumeAI.Data.Migrations
                     b.HasIndex("ServiceId");
 
                     b.ToTable("Projects");
+                });
+
+            modelBuilder.Entity("ResumeAI.Models.CoverLetter.CoverLetter", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BodyContent")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Closing")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DateOfBirth")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Introduction")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("JobTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RecipientAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RecipientFullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ResumeImage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SecondName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SignatureName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Summary")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ThirdName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CoverLetters");
+                });
+
+            modelBuilder.Entity("ResumeAI.Models.CoverLetter.Details.CoverLetterExperience", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CompanyLocation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CoverLetterId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmploymentType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EndDate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("JobTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StartDate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CoverLetterId");
+
+                    b.ToTable("CoverLetterExperiences");
+                });
+
+            modelBuilder.Entity("ResumeAI.Models.CoverLetter.Details.CoverLetterLanguage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CoverLetterId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LanguageName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProficiencyLevel")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CoverLetterId");
+
+                    b.ToTable("CoverLetterLanguages");
+                });
+
+            modelBuilder.Entity("ResumeAI.Models.CoverLetter.Details.CoverLetterSkill", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CoverLetterId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SkillCategory")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SkillDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SkillName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CoverLetterId");
+
+                    b.ToTable("CoverLetterSkills");
+                });
+
+            modelBuilder.Entity("ResumeAI.Models.Email.CreateEmail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AdditionalInfo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmailType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Purpose")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RecipientName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SenderName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Tone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CreateEmails");
                 });
 
             modelBuilder.Entity("ResumeAI.Models.Person.Person", b =>
@@ -303,8 +533,8 @@ namespace ResumeAI.Data.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("CreatedDate")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DateOfBirth")
                         .HasColumnType("nvarchar(max)");
@@ -324,8 +554,8 @@ namespace ResumeAI.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("ModifiedDate")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("PersonalImage")
                         .HasColumnType("varbinary(max)");
@@ -357,6 +587,35 @@ namespace ResumeAI.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Portfolios");
+                });
+
+            modelBuilder.Entity("ResumeAI.Models.Portfolio.Service", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("PortfolioId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ServiceDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("ServiceImage")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("ServiceName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PortfolioId");
+
+                    b.ToTable("Services");
                 });
 
             modelBuilder.Entity("ResumeAI.Models.Resume.Details.Certificate", b =>
@@ -647,35 +906,6 @@ namespace ResumeAI.Data.Migrations
                     b.ToTable("Resumes");
                 });
 
-            modelBuilder.Entity("Service", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("PortfolioId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ServiceDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte[]>("ServiceImage")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<string>("ServiceName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PortfolioId");
-
-                    b.ToTable("Services");
-                });
-
             modelBuilder.Entity("ResumeAI.Models.Person.User", b =>
                 {
                     b.HasBaseType("ResumeAI.Models.Person.Person");
@@ -742,11 +972,66 @@ namespace ResumeAI.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Service", null)
+                    b.HasOne("ResumeAI.Models.Portfolio.Service", null)
                         .WithMany("Projects")
                         .HasForeignKey("ServiceId");
 
                     b.Navigation("Portfolio");
+                });
+
+            modelBuilder.Entity("ResumeAI.Models.CoverLetter.CoverLetter", b =>
+                {
+                    b.HasOne("ResumeAI.Models.Person.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ResumeAI.Models.CoverLetter.Details.CoverLetterExperience", b =>
+                {
+                    b.HasOne("ResumeAI.Models.CoverLetter.CoverLetter", "CoverLetter")
+                        .WithMany("CoverLetterExperiences")
+                        .HasForeignKey("CoverLetterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CoverLetter");
+                });
+
+            modelBuilder.Entity("ResumeAI.Models.CoverLetter.Details.CoverLetterLanguage", b =>
+                {
+                    b.HasOne("ResumeAI.Models.CoverLetter.CoverLetter", "CoverLetter")
+                        .WithMany("CoverLetterLanguages")
+                        .HasForeignKey("CoverLetterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CoverLetter");
+                });
+
+            modelBuilder.Entity("ResumeAI.Models.CoverLetter.Details.CoverLetterSkill", b =>
+                {
+                    b.HasOne("ResumeAI.Models.CoverLetter.CoverLetter", "CoverLetter")
+                        .WithMany("CoverLetterSkills")
+                        .HasForeignKey("CoverLetterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CoverLetter");
+                });
+
+            modelBuilder.Entity("ResumeAI.Models.Email.CreateEmail", b =>
+                {
+                    b.HasOne("ResumeAI.Models.Person.User", "User")
+                        .WithMany("CreateEmails")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ResumeAI.Models.Portfolio.Portfolio", b =>
@@ -758,6 +1043,17 @@ namespace ResumeAI.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ResumeAI.Models.Portfolio.Service", b =>
+                {
+                    b.HasOne("ResumeAI.Models.Portfolio.Portfolio", "Portfolio")
+                        .WithMany("Services")
+                        .HasForeignKey("PortfolioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Portfolio");
                 });
 
             modelBuilder.Entity("ResumeAI.Models.Resume.Details.Certificate", b =>
@@ -813,15 +1109,13 @@ namespace ResumeAI.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Service", b =>
+            modelBuilder.Entity("ResumeAI.Models.CoverLetter.CoverLetter", b =>
                 {
-                    b.HasOne("ResumeAI.Models.Portfolio.Portfolio", "Portfolio")
-                        .WithMany("Services")
-                        .HasForeignKey("PortfolioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("CoverLetterExperiences");
 
-                    b.Navigation("Portfolio");
+                    b.Navigation("CoverLetterLanguages");
+
+                    b.Navigation("CoverLetterSkills");
                 });
 
             modelBuilder.Entity("ResumeAI.Models.Portfolio.Portfolio", b =>
@@ -829,6 +1123,11 @@ namespace ResumeAI.Data.Migrations
                     b.Navigation("Projects");
 
                     b.Navigation("Services");
+                });
+
+            modelBuilder.Entity("ResumeAI.Models.Portfolio.Service", b =>
+                {
+                    b.Navigation("Projects");
                 });
 
             modelBuilder.Entity("ResumeAI.Models.Resume.Resume", b =>
@@ -846,13 +1145,10 @@ namespace ResumeAI.Data.Migrations
                     b.Navigation("Skills");
                 });
 
-            modelBuilder.Entity("Service", b =>
-                {
-                    b.Navigation("Projects");
-                });
-
             modelBuilder.Entity("ResumeAI.Models.Person.User", b =>
                 {
+                    b.Navigation("CreateEmails");
+
                     b.Navigation("Portfolios");
 
                     b.Navigation("Resumes");

@@ -1,0 +1,38 @@
+﻿@model ResumeAI.DTOs.CreateEmailDTO
+
+@{
+    ViewData["Title"] = "Generated Email";
+    Layout = null;
+}
+
+<h2>Generated Email</h2>
+
+<div class="card p-4 shadow-sm">
+    <h4><strong>Subject:</strong> @Model.Subject</h4>
+
+    <p><strong>To:</strong> @Model.RecipientName</p>
+    <p><strong>From:</strong> @Model.SenderName</p>
+    <p><strong>Type:</strong> @Model.EmailType</p>
+    <p><strong>Tone:</strong> @Model.Tone</p>
+    <p><strong>Purpose:</strong> @Model.Purpose</p>
+
+    <hr />
+
+    <p>Dear @Model.RecipientName,</p>
+
+    <p>
+        @Model.Purpose
+    </p>
+
+    @if (!string.IsNullOrWhiteSpace(Model.AdditionalInfo))
+    {
+        <p>@Model.AdditionalInfo</p>
+    }
+
+    <p>Sincerely,</p>
+    <p>@Model.SenderName</p>
+</div>
+
+<div class="mt-3">
+    <a asp-action="Index" class="btn btn-secondary">Back to Create</a>
+</div>

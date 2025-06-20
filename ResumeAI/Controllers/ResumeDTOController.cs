@@ -53,72 +53,20 @@ namespace ResumeAI.Controllers
 
             return RedirectToAction("Index");
         }
-
-        private string ConvertDtoToRawText(ResumeDTO dto)
-        {
-            return $@"
-            First Name: {dto.FirstName}
-            Second Name: {dto.SecondName}
-            Third Name: {dto.LastName}
-            Email: {dto.Email}
-            Phone: {dto.PhoneNumber}
-            Job Title: {dto.JobTitle}
-            Date of Birth: {dto.DateOfBirth}
-            Address: {dto.Address}
-            Summary: {dto.Summary}
-
-            Education:
-            {string.Join("\n", dto.Educations.Select(e => $"{e.Degree} in {e.FieldOfStudy} from {e.InstitutionName} ({e.StartDate} - {e.EndDate}, GPA: {e.GPA}, Description: {e.Description})"))}
-
-            Experience:
-            {string.Join("\n", dto.Experiences.Select(e => $"{e.JobTitle} at {e.CompanyName}, {e.CompanyLocation} ({e.StartDate} - {e.EndDate}) - {e.EmploymentType}, Current: {e.IsCurrent}, Description: {e.Description}"))}
-
-            Certificates:
-            {string.Join("\n", dto.Certificates.Select(c => $"{c.CourseName} - {c.InstitutionName}, GPA: {c.GPA}, Type: {c.CertificateType}, ({c.StartDate} - {c.EndDate})"))}
-
-            Skills:
-            {string.Join(", ", dto.Skills.Select(s => $"{s.SkillName} ({s.SkillCategory}) - {s.SkillDescription}"))}
-
-            Languages:
-            {string.Join(", ", dto.Languages.Select(l => $"{l.LanguageName} ({l.ProficiencyLevel}){(l.IsNative ? " [Native]" : "")}"))}
-
-            Links:
-            {string.Join(", ", dto.Links.Select(l => $"{l.LinkName}: {l.LinkUrl}"))}
-            ";
-        }
         [HttpGet]
-        [Authorize]
         public IActionResult Create()
         {
             return View();
         }
         [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> Create(ResumeDTO model, string? rawResumeText)
+        public async Task<IActionResult> Create(ResumeDTO model, [FromForm] string rawText)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userId == null) return Unauthorized();
 
-            Resume resume;
-
-            // 🔹 If raw resume text is provided, use AI to parse it
-            if (!string.IsNullOrWhiteSpace(rawResumeText))
-            {
-                var parsed = await _resumeParser.ParseResumeAsync(rawResumeText);
-                if (parsed == null)
-                {
-                    ModelState.AddModelError("", "AI failed to parse the resume. Please try again.");
-                    return View(model);
-                }
-
-                resume = parsed;
-                resume.UserId = userId;
-                resume.ResumeCreatedDate = DateTime.UtcNow.ToString("yyyy-MM-dd");
-                resume.ResumeModifiedDate = DateTime.UtcNow.ToString("yyyy-MM-dd");
-            }
-            else
-            {
+            var resume = await _resumeParser.ParseResumeAsync(rawText);
                 // 🔹 Fallback: manual form-based creation
+#pragma warning disable CS8601 // Possible null reference assignment.
                 resume = new Resume
                 {
                     UserId = userId,
@@ -182,7 +130,7 @@ namespace ResumeAI.Controllers
                     ResumeCreatedDate = DateTime.UtcNow.ToString("yyyy-MM-dd"),
                     ResumeModifiedDate = DateTime.UtcNow.ToString("yyyy-MM-dd")
                 };
-            }
+#pragma warning restore CS8601 // Possible null reference assignment.
 
             await _resumeService.SaveGeneratedResumeAsync(userId, resume);
             return RedirectToAction("ViewGenerated");

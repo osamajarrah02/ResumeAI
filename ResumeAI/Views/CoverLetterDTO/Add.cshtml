@@ -1,0 +1,165 @@
+﻿@model ResumeAI.DTOs.CoverLetterDTO
+
+@{
+    ViewData["Title"] = "Create Cover Letter";
+}
+
+<div class="container mt-5 mb-5">
+    <div class="card shadow-lg rounded-4 p-4">
+        <h2 class="text-center mb-4 text-primary">Create Your Cover Letter</h2>
+        <form asp-action="Create" method="post">
+            @Html.AntiForgeryToken()
+
+            <!-- 🔹 Personal Information -->
+            <h4 class="text-secondary mb-3">Personal Information</h4>
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label asp-for="FirstName" class="form-label"></label>
+                    <input asp-for="FirstName" class="form-control" placeholder="First Name" />
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="SecondName" class="form-label"></label>
+                    <input asp-for="SecondName" class="form-control" placeholder="Second Name" />
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="ThirdName" class="form-label"></label>
+                    <input asp-for="ThirdName" class="form-control" placeholder="Third Name" />
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label asp-for="Email" class="form-label"></label>
+                    <input asp-for="Email" class="form-control" placeholder="Your Email Address" />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="PhoneNumber" class="form-label"></label>
+                    <input asp-for="PhoneNumber" class="form-control" placeholder="Phone Number" />
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Address" class="form-label"></label>
+                <input asp-for="Address" class="form-control" placeholder="Full Address" />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="JobTitle" class="form-label"></label>
+                <input asp-for="JobTitle" class="form-control" placeholder="Job Title You're Applying For" />
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Summary" class="form-label"></label>
+                <textarea asp-for="Summary" class="form-control" rows="3" placeholder="Professional Summary"></textarea>
+            </div>
+
+            <!-- 🔹 Recipient Information -->
+            <h4 class="text-secondary mb-3">Recipient Information</h4>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label asp-for="RecipientFullName" class="form-label"></label>
+                    <input asp-for="RecipientFullName" class="form-control" placeholder="Recipient Full Name" />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="RecipientAddress" class="form-label"></label>
+                    <input asp-for="RecipientAddress" class="form-control" placeholder="Recipient Address" />
+                </div>
+            </div>
+
+            <!-- 🔹 Cover Letter Content -->
+            <h4 class="text-secondary mb-3">Letter Content</h4>
+            <div class="mb-3">
+                <label asp-for="Introduction" class="form-label"></label>
+                <textarea asp-for="Introduction" class="form-control" rows="3" placeholder="Introduction"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="BodyContent" class="form-label"></label>
+                <textarea asp-for="BodyContent" class="form-control" rows="5" placeholder="Body Content (Highlight Skills & Experience)"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Closing" class="form-label"></label>
+                <textarea asp-for="Closing" class="form-control" rows="2" placeholder="Closing Statement"></textarea>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="SignatureName" class="form-label"></label>
+                <input asp-for="SignatureName" class="form-control" placeholder="Your Full Name (Signature)" />
+            </div>
+
+            <!-- CoverLetterExperiences -->
+            <h4 class="text-secondary mb-3">Experiences</h4>
+            @for (int i = 0; i < 3; i++)
+            {
+                <div class="border rounded p-3 mb-3">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input name="CoverLetterExperiences[@i].JobTitle" class="form-control" placeholder="Job Title" />
+                        </div>
+                        <div class="col-md-4">
+                            <input name="CoverLetterExperiences[@i].CompanyName" class="form-control" placeholder="Company Name" />
+                        </div>
+                        <div class="col-md-4">
+                            <input name="CoverLetterExperiences[@i].CompanyLocation" class="form-control" placeholder="Company Location" />
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-3">
+                            <input name="CoverLetterExperiences[@i].StartDate" class="form-control" placeholder="Start Date" />
+                        </div>
+                        <div class="col-md-3">
+                            <input name="CoverLetterExperiences[@i].EndDate" class="form-control" placeholder="End Date" />
+                        </div>
+                        <div class="col-md-3">
+                            <input name="CoverLetterExperiences[@i].EmploymentType" class="form-control" placeholder="Employment Type" />
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <textarea name="CoverLetterExperiences[@i].Description" class="form-control" rows="2" placeholder="Description"></textarea>
+                    </div>
+                </div>
+            }
+
+            <!-- CoverLetterSkills -->
+            <h4 class="text-secondary mb-3">Skills</h4>
+            @for (int i = 0; i < 3; i++)
+            {
+                <div class="border rounded p-3 mb-3">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input name="CoverLetterSkills[@i].SkillName" class="form-control" placeholder="Skill Name" />
+                        </div>
+                        <div class="col-md-4">
+                            <input name="CoverLetterSkills[@i].SkillCategory" class="form-control" placeholder="Skill Category" />
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <textarea name="CoverLetterSkills[@i].SkillDescription" class="form-control" rows="2" placeholder="Skill Description"></textarea>
+                    </div>
+                </div>
+            }
+
+            <!-- CoverLetterLanguages -->
+            <h4 class="text-secondary mb-3">Languages</h4>
+            @for (int i = 0; i < 3; i++)
+            {
+                <div class="border rounded p-3 mb-3">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input name="CoverLetterLanguages[@i].LanguageName" class="form-control" placeholder="Language Name" />
+                        </div>
+                        <div class="col-md-6">
+                            <input name="CoverLetterLanguages[@i].ProficiencyLevel" class="form-control" placeholder="Proficiency Level" />
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-lg px-5">Generate Cover Letter</button>
+            </div>
+        </form>
+    </div>
+</div>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
