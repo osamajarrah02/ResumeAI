@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using ResumeAI.Models.CoverLetter;
+using ResumeAI.Models.CoverLetter.Details;
+using ResumeAI.Models.Email;
 using ResumeAI.Models.Person;
 using ResumeAI.Models.Portfolio;
 using ResumeAI.Models.Resume;
@@ -24,6 +27,10 @@ namespace ResumeAI.Data
         public DbSet<Portfolio> Portfolios { get; set; }
         public DbSet<Service> Services { get; set; }
         public DbSet<Project> Projects { get; set; }
-
+        public DbSet<CreateEmail> CreateEmails { get; set; }
+        public DbSet<CoverLetter> CoverLetters { get; set; }
+        public DbSet<CoverLetterExperience> CoverLetterExperiences { get; set; }
+        public DbSet<CoverLetterSkill> CoverLetterSkills { get; set; }
+        public DbSet<CoverLetterLanguage> CoverLetterLanguages { get; set; }
     }
 }

@@ -23,6 +23,7 @@ namespace ResumeAI.DTOs
         public DateTime? PortFolioCreatedDate { get; set; }
         public DateTime? PortFolioModifiedDate { get; set; }
 
+        public byte[]? PersonalImage { get; set; }
         public string? ImageBase64 { get; set; }
         public IFormFile? PortFolioImage { get; set; }
 

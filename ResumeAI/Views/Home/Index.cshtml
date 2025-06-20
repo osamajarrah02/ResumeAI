@@ -1,5 +1,10 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    if (TempData["GoToCreatorNext"] != null && TempData["GoToCreatorNext"].ToString() == "True")
+    {
+        <script>
+            window.location.href = "/Identity/Account/Register";
+        </script>
+    }
 }
 
 <Doctype html>

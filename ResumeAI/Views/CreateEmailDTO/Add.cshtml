@@ -1,0 +1,55 @@
+﻿@model ResumeAI.DTOs.CreateEmailDTO
+
+@{
+    ViewData["Title"] = "Create Email";
+    Layout = null;
+}
+
+<h2>Create AI-Generated Email</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="EmailType">Email Type</label>
+        <select asp-for="EmailType" class="form-control">
+            <option value="Professional">Professional</option>
+            <option value="Personal">Personal</option>
+            <option value="Semi-professional">Semi-professional</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Subject">Subject</label>
+        <input asp-for="Subject" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="RecipientName">Recipient Name</label>
+        <input asp-for="RecipientName" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SenderName">Sender Name</label>
+        <input asp-for="SenderName" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Tone">Tone</label>
+        <select asp-for="Tone" class="form-control">
+            <option value="Formal">Formal</option>
+            <option value="Friendly">Friendly</option>
+            <option value="Semi-formal">Semi-formal</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Purpose">Purpose</label>
+        <textarea asp-for="Purpose" class="form-control" rows="3"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="AdditionalInfo">Additional Information</label>
+        <textarea asp-for="AdditionalInfo" class="form-control" rows="3"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Generate & Save Email</button>
+</form>

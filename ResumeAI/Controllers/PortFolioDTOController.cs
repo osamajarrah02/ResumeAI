@@ -44,91 +44,78 @@ namespace ResumeAI.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public IActionResult Add()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (string.IsNullOrEmpty(userId)) return Unauthorized();
-
             var portfolioDto = new PortfolioDTO
             {
-                UserId = userId,
                 Services = new List<ServiceDTO> { new ServiceDTO() },
                 Projects = new List<ProjectDTO> { new ProjectDTO() }
             };
-
             return View(portfolioDto);
         }
-        private string ConvertDtoToRawText(PortfolioDTO dto)
-        {
-            return $@"
-            First Name: {dto.FirstName}
-            Second Name: {dto.SecondName}
-            Third Name: {dto.ThirdName}
-            Email: {dto.Email}
-            Phone: {dto.PhoneNumber}
-            Job Title: {dto.JobTitle}
-            Date of Birth: {dto.DateOfBirth}
-            Address: {dto.Address}
-            Summary: {dto.Summary}
-
-            Services:
-            {string.Join("\n", dto.Services.Select(s => $"- {s.ServiceName}: {s.ServiceDescription}"))}
-
-            Projects:
-            {string.Join("\n", dto.Projects.Select(p => $"- {p.ProjectName} ({p.StartDate:yyyy-MM-dd} - {p.EndDate:yyyy-MM-dd})\n  Description: {p.ProjectDescription}\n  Link: {p.ProjectLink}\n  Attachments: {p.ProjectAttachments}"))}
-            ";
-        }
-
         [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> Create(PortfolioDTO model, string rawPortfolioText)
+        public async Task<IActionResult> Create(PortfolioDTO model, [FromForm] string rawText)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (string.IsNullOrEmpty(userId)) return Unauthorized();
+            if (userId == null) return Unauthorized();
 
-            if (!string.IsNullOrWhiteSpace(rawPortfolioText))
+            byte[]? imageBytes = null;
+
+            if (model.PortFolioImage != null && model.PortFolioImage.Length > 0)
             {
-                var portfolioParsed = await _portfolioParser.ParsePortFolioAsync(rawPortfolioText);
-                if (portfolioParsed == null)
+                using (var ms = new MemoryStream())
                 {
-                    ModelState.AddModelError("", "Failed to parse portfolio with AI.");
-                    return View("Add");
+                    await model.PortFolioImage.CopyToAsync(ms);
+                    imageBytes = ms.ToArray();
                 }
-
-                model = new PortfolioDTO
-                {
-                    FirstName = portfolioParsed.FirstName,
-                    SecondName = portfolioParsed.SecondName,
-                    ThirdName = portfolioParsed.ThirdName,
-                    Email = portfolioParsed.Email,
-                    PhoneNumber = portfolioParsed.PhoneNumber,
-                    Address = portfolioParsed.Address,
-                    Summary = portfolioParsed.Summary,
-                    DateOfBirth = portfolioParsed.DateOfBirth,
-                    JobTitle = portfolioParsed.JobTitle,
-                    Services = portfolioParsed.Services?.Select(s => new ServiceDTO
-                    {
-                        ServiceName = s.ServiceName,
-                        ServiceDescription = s.ServiceDescription
-                    }).ToList(),
-                    Projects = portfolioParsed.Projects?.Select(p => new ProjectDTO
-                    {
-                        ProjectName = p.ProjectName,
-                        ProjectDescription = p.ProjectDescription,
-                        StartDate = p.StartDate,
-                        EndDate = p.EndDate,
-                        ProjectAttachments = p.ProjectAttachments,
-                        ProjectLink = p.ProjectLink
-                    }).ToList(),
-                    UserId = userId
-                };
             }
-            await _portfolioService.CreatePortfolioAsync(model, userId);
 
+            var portfolio = new Portfolio
+            {
+                UserId = userId,
+                FirstName = model.FirstName,
+                SecondName = model.SecondName,
+                ThirdName = model.ThirdName,
+                Email = model.Email,
+                PhoneNumber = model.PhoneNumber,
+                Address = model.Address,
+                JobTitle = model.JobTitle,
+                DateOfBirth = model.DateOfBirth,
+                Summary = model.Summary,
+                PersonalImage = imageBytes, // ✅ Save image
+                Services = model.Services?.Select(e =>
+                {
+                    byte[]? imageData = null;
+                    if (e.ServiceImageFile != null && e.ServiceImageFile.Length > 0)
+                    {
+                        using (var ms = new MemoryStream())
+                        {
+                            e.ServiceImageFile.CopyTo(ms);
+                            imageData = ms.ToArray();
+                        }
+                    }
+
+                    return new ResumeAI.Models.Portfolio.Service
+                    {
+                        ServiceName = e.ServiceName,
+                        ServiceDescription = e.ServiceDescription,
+                        ServiceImage = imageData
+                    };
+                }).ToList(),
+                Projects = model.Projects?.Select(c => new Project
+                {
+                    ProjectName = c.ProjectName,
+                    ProjectDescription = c.ProjectDescription,
+                    ProjectAttachments = c.ProjectAttachments,
+                    ProjectLink = c.ProjectLink,
+                }).ToList(),
+                CreatedDate = DateTime.UtcNow.ToString("yyyy-MM-dd"),
+                ModifiedDate = DateTime.UtcNow.ToString("yyyy-MM-dd")
+            };
+
+            await _portfolioService.SaveGeneratedPortFolioAsync(userId, portfolio);
             return RedirectToAction("View");
         }
-
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> View()
@@ -151,7 +138,9 @@ namespace ResumeAI.Controllers
                 DateOfBirth = model.DateOfBirth,
                 JobTitle = model.JobTitle,
                 UserId = model.UserId,
-
+                ImageBase64 = model.PersonalImage != null
+                ? $"data:image/png;base64,{Convert.ToBase64String(model.PersonalImage)}"
+                : null,
                 Services = model.Services?.Select(s => new ServiceDTO
                 {
                     Id = s.Id,
@@ -170,7 +159,6 @@ namespace ResumeAI.Controllers
                     ProjectLink = p.ProjectLink
                 }).ToList()
             };
-
             return View(dto);
         }
 

@@ -1,11 +1,9 @@
 ﻿using System.Security.Claims;
 using HTU_FinalProject.Interfaces;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ResumeAI.Data;
 using ResumeAI.DTOs;
-using ResumeAI.Interfaces;
 using ResumeAI.Models.Person;
 using ResumeAI.Models.Resume;
 
@@ -13,13 +11,11 @@ public class ResumeService : IResume
 {
     private readonly UserManager<Person> _userManager;
     private readonly ApplicationDbContext _context;
-    private readonly IResumeParser _resumeParser;
 
-    public ResumeService(UserManager<Person> userManager, ApplicationDbContext context, IResumeParser resumeParser)
+    public ResumeService(UserManager<Person> userManager, ApplicationDbContext context)
     {
         _userManager = userManager;
         _context = context;
-        _resumeParser = resumeParser;
     }
 
     public async Task<ResumeDTO?> GetResumeAsync(string userId)

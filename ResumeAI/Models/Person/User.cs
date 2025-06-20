@@ -4,5 +4,6 @@
     {
         public List<ResumeAI.Models.Resume.Resume> Resumes { get; set; }
         public List<ResumeAI.Models.Portfolio.Portfolio> Portfolios { get; set; }
+        public List<ResumeAI.Models.Email.CreateEmail> CreateEmails { get; set; }
     }
 }

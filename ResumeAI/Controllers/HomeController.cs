@@ -18,6 +18,11 @@ namespace ResumeAI.Controllers
             return View();
         }
 
+        public IActionResult Creator()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

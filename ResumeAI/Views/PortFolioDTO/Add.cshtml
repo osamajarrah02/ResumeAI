@@ -3,84 +3,228 @@
     Layout = null;
 }
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <title>Create Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #000;
+            color: #fff;
+            min-height: 100vh;
+            padding: 60px 20px;
+        }
+
+        .portfolio-container {
+            background: #fff;
+            color: #000;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 16px 48px rgba(255, 255, 255, 0.1);
+            animation: fadeInUp 1s ease;
+        }
+
+        h1, h2 {
+            font-weight: 700;
+            color: #000;
+        }
+
+            h2::before {
+                content: "";
+                display: block;
+                height: 4px;
+                width: 60px;
+                background-color: #000;
+                margin-bottom: 10px;
+                border-radius: 5px;
+            }
+
+        .card-list-item {
+            background-color: #f9f9f9;
+            border: none;
+            margin-bottom: 1.5rem;
+            padding: 1.25rem;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            color: #000;
+        }
+
+            .card-list-item:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            }
+
+        .text-highlight {
+            color: #555;
+            font-weight: 600;
+        }
+
+        a {
+            color: #000;
+        }
+
+            a:hover {
+                text-decoration: underline;
+                color: #444;
+            }
+
+        .btn-outline-light {
+            border-color: #fff;
+            color: #fff;
+        }
+
+            .btn-outline-light:hover {
+                background-color: #fff;
+                color: #000;
+            }
+
+        @@keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-section {
+            background: #fff;
+            color: #000;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 12px 40px rgba(255, 255, 255, 0.08);
+        }
+
+        .form-control, textarea {
+            margin-bottom: 10px;
+        }
+
+        .btn-outline-light {
+            border-color: #000 !important;
+            color: #000 !important;
+            background-color: transparent;
+        }
+
+            .btn-outline-light:hover {
+                background-color: #000 !important;
+                color: #fff !important;
+            }
+
+
+        .add-btn {
+            margin-top: 10px;
+        }
+    </style>
 </head>
-<body style="box-sizing: border-box;">
-    <form asp-action="Create" asp-controller="PortFolioDTO" method="post" enctype="multipart/form-data">
-        <input type="hidden" asp-for="UserId" />
+<body>
+    <div class="container form-section">
+        <h2 class="mb-4 text-center">Create Portfolio</h2>
+        <form asp-action="Create" asp-controller="PortFolioDTO" method="post" enctype="multipart/form-data">
+            <input type="hidden" asp-for="UserId" />
 
-        <label asp-for="FirstName">First Name</label>
-        <input asp-for="FirstName" />
-        <span asp-validation-for="FirstName"></span>
+            <div class="row">
+                <div class="col-md-4">
+                    <label asp-for="FirstName">First Name</label>
+                    <input asp-for="FirstName" class="form-control" />
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="SecondName">Second Name</label>
+                    <input asp-for="SecondName" class="form-control" />
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="ThirdName">Third Name</label>
+                    <input asp-for="ThirdName" class="form-control" />
+                </div>
+            </div>
 
-        <label asp-for="SecondName">Second Name</label>
-        <input asp-for="SecondName" />
-        <span asp-validation-for="SecondName"></span>
+            <label asp-for="Email">Email</label>
+            <input asp-for="Email" class="form-control" />
 
-        <label asp-for="ThirdName">Third Name</label>
-        <input asp-for="ThirdName" />
-        <span asp-validation-for="ThirdName"></span>
+            <label asp-for="PhoneNumber">Phone Number</label>
+            <input asp-for="PhoneNumber" class="form-control" />
 
-        <label asp-for="Email">Email</label>
-        <input asp-for="Email" />
-        <span asp-validation-for="Email"></span>
+            <label asp-for="Address">Address</label>
+            <input asp-for="Address" class="form-control" />
 
-        <label asp-for="PhoneNumber">Phone Number</label>
-        <input asp-for="PhoneNumber" />
-        <span asp-validation-for="PhoneNumber"></span>
+            <label asp-for="JobTitle">Job Title</label>
+            <input asp-for="JobTitle" class="form-control" />
 
-        <label asp-for="Address">Address</label>
-        <input asp-for="Address" />
-        <span asp-validation-for="Address"></span>
+            <label asp-for="Summary">Summary</label>
+            <textarea asp-for="Summary" class="form-control"></textarea>
 
-        <label asp-for="PortFolioImage">Choose Image</label>
-        <input asp-for="PortFolioImage" type="file" />
-        <span asp-validation-for="PortFolioImage"></span>
+            @if (!string.IsNullOrEmpty(Model.ImageBase64))
+            {
+                <div class="text-center mb-4">
+                    <img src="@Model.ImageBase64" alt="Portfolio Image" class="img-fluid rounded-circle shadow" style="max-width: 200px;" />
+                </div>
+            }
+            <label asp-for="PortFolioImage">Choose Image</label>
+            <input asp-for="PortFolioImage" type="file" class="form-control" />
 
-        <label asp-for="JobTitle">Job Title</label>
-        <input asp-for="JobTitle" />
-        <span asp-validation-for="JobTitle"></span>
+            <h4 class="mt-4">Services</h4>
+            <div id="services-container">
+                <div class="service-item mb-3" data-index="0">
+                    <input name="Services[0].ServiceName" class="form-control" placeholder="Service Name" />
+                    <textarea name="Services[0].ServiceDescription" class="form-control" placeholder="Service Description"></textarea>
+                    <input type="file" name="Services[0].ServiceImageFile" class="form-control" />
+                </div>
+            </div>
+            <button type="button" class="btn btn-dark btn-sm add-btn" id="add-service">+ Add Another Service</button>
 
-        <label asp-for="DateOfBirth">Date of Birth</label>
-        <input asp-for="DateOfBirth" type="date" />
-        <span asp-validation-for="DateOfBirth"></span>
+            <!-- Projects Section -->
+            <h4 class="mt-4">Projects</h4>
+            <div id="projects-container">
+                <div class="project-item mb-3" data-index="0">
+                    <input name="Projects[0].ProjectName" class="form-control" placeholder="Project Name" />
+                    <textarea name="Projects[0].ProjectDescription" class="form-control" placeholder="Project Description"></textarea>
+                    <input name="Projects[0].ProjectAttachments" class="form-control" placeholder="Project Attachment" />
+                    <input name="Projects[0].ProjectLink" class="form-control" placeholder="Project Link" />
+                </div>
+            </div>
+            <button type="button" class="btn btn-dark btn-sm add-btn" id="add-project">+ Add Another Project</button>
 
-        <label asp-for="Summary">Summary</label>
-        <textarea asp-for="Summary"></textarea>
-        <span asp-validation-for="Summary"></span>
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-dark px-5">Create</button>
+            </div>
+        </form>
+    </div>
 
-        <h3>Services</h3>
-        <div>
-            <input asp-for="Services[0].ServiceName" placeholder="Service Title" />
-            <span asp-validation-for="Services[0].ServiceName"></span>
+    <script>
+        let serviceIndex = 1;
+        let projectIndex = 1;
 
-            <input asp-for="Services[0].ServiceDescription" placeholder="Service Description" />
-            <span asp-validation-for="Services[0].ServiceDescription"></span>
-        </div>
+                $('#add-service').click(function () {
+            const html = `
+                <div class="service-item mb-3" data-index="${serviceIndex}">
+                    <input name="Services[${serviceIndex}].ServiceName" class="form-control" placeholder="Service Name" />
+                    <textarea name="Services[${serviceIndex}].ServiceDescription" class="form-control" placeholder="Service Description"></textarea>
+                    <input type="file" name="Services[${serviceIndex}].ServiceImageFile" class="form-control" />
+                </div>`;
+            $('#services-container').append(html);
+            serviceIndex++;
+        });
 
-        <h3>Projects</h3>
-        <div>
-            <input asp-for="Projects[0].ProjectName" placeholder="Project Name" />
-            <span asp-validation-for="Projects[0].ProjectName"></span>
-
-            <input asp-for="Projects[0].ProjectDescription" placeholder="Project Description" />
-            <span asp-validation-for="Projects[0].ProjectDescription"></span>
-
-            <input asp-for="Projects[0].ProjectAttachments" placeholder="Project Attachments" />
-            <span asp-validation-for="Projects[0].ProjectAttachments"></span>
-
-            <input asp-for="Projects[0].ProjectLink" placeholder="Project Link" />
-            <span asp-validation-for="Projects[0].ProjectLink"></span>
-        </div>
-
-        <button type="submit">Create</button>
-    </form>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js"></script>
+        $('#add-project').click(function () {
+            const html = `
+                <div class="project-item mb-3" data-index="${projectIndex}">
+                    <input name="Projects[${projectIndex}].ProjectName" class="form-control" placeholder="Project Name" />
+                    <textarea name="Projects[${projectIndex}].ProjectDescription" class="form-control" placeholder="Project Description"></textarea>
+                    <input name="Projects[${projectIndex}].ProjectAttachments" class="form-control" placeholder="Project Attachment" />
+                    <input name="Projects[${projectIndex}].ProjectLink" class="form-control" placeholder="Project Link" />
+                </div>`;
+            $('#projects-container').append(html);
+            projectIndex++;
+        });
+    </script>
 </body>
 </html>
