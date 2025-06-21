@@ -1,0 +1,50 @@
+﻿body {
+    background: #fff;
+    font-family: 'Segoe UI', sans-serif;
+    color: #333;
+}
+
+header {
+    background: linear-gradient(to right, #0d6efd, #4e9bff);
+    color: white;
+    padding: 100px 0;
+    text-align: center;
+    animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.feature-box {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.feature-box:hover {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+}
+
+.example-card {
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 1.5rem;
+    background: #fff;
+    transition: transform 0.3s ease;
+}
+
+.example-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
+}

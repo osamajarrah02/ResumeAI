@@ -10,121 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #000;
-            color: #fff;
-            min-height: 100vh;
-            padding: 60px 20px;
-        }
-
-        .portfolio-container {
-            background: #fff;
-            color: #000;
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 16px 48px rgba(255, 255, 255, 0.1);
-            animation: fadeInUp 1s ease;
-        }
-
-        h1, h2 {
-            font-weight: 700;
-            color: #000;
-        }
-
-            h2::before {
-                content: "";
-                display: block;
-                height: 4px;
-                width: 60px;
-                background-color: #000;
-                margin-bottom: 10px;
-                border-radius: 5px;
-            }
-
-        .card-list-item {
-            background-color: #f9f9f9;
-            border: none;
-            margin-bottom: 1.5rem;
-            padding: 1.25rem;
-            border-radius: 15px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            color: #000;
-        }
-
-            .card-list-item:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-            }
-
-        .text-highlight {
-            color: #555;
-            font-weight: 600;
-        }
-
-        a {
-            color: #000;
-        }
-
-            a:hover {
-                text-decoration: underline;
-                color: #444;
-            }
-
-        .btn-outline-light {
-            border-color: #fff;
-            color: #fff;
-        }
-
-            .btn-outline-light:hover {
-                background-color: #fff;
-                color: #000;
-            }
-
-        @@keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .form-section {
-            background: #fff;
-            color: #000;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 12px 40px rgba(255, 255, 255, 0.08);
-        }
-
-        .form-control, textarea {
-            margin-bottom: 10px;
-        }
-
-        .btn-outline-light {
-            border-color: #000 !important;
-            color: #000 !important;
-            background-color: transparent;
-        }
-
-            .btn-outline-light:hover {
-                background-color: #000 !important;
-                color: #fff !important;
-            }
-
-
-        .add-btn {
-            margin-top: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="~/css/PortFolioCSS/Add.css" />
 </head>
 <body>
     <div class="container form-section">
@@ -180,8 +66,6 @@
                 </div>
             </div>
             <button type="button" class="btn btn-dark btn-sm add-btn" id="add-service">+ Add Another Service</button>
-
-            <!-- Projects Section -->
             <h4 class="mt-4">Projects</h4>
             <div id="projects-container">
                 <div class="project-item mb-3" data-index="0">
@@ -195,36 +79,11 @@
 
             <div class="text-center mt-4">
                 <button type="submit" class="btn btn-dark px-5">Create</button>
+                <a class="btn btn-outline-dark px-5" asp-controller="Home" asp-action="Creator">Return</a>
             </div>
         </form>
     </div>
-
-    <script>
-        let serviceIndex = 1;
-        let projectIndex = 1;
-
-                $('#add-service').click(function () {
-            const html = `
-                <div class="service-item mb-3" data-index="${serviceIndex}">
-                    <input name="Services[${serviceIndex}].ServiceName" class="form-control" placeholder="Service Name" />
-                    <textarea name="Services[${serviceIndex}].ServiceDescription" class="form-control" placeholder="Service Description"></textarea>
-                    <input type="file" name="Services[${serviceIndex}].ServiceImageFile" class="form-control" />
-                </div>`;
-            $('#services-container').append(html);
-            serviceIndex++;
-        });
-
-        $('#add-project').click(function () {
-            const html = `
-                <div class="project-item mb-3" data-index="${projectIndex}">
-                    <input name="Projects[${projectIndex}].ProjectName" class="form-control" placeholder="Project Name" />
-                    <textarea name="Projects[${projectIndex}].ProjectDescription" class="form-control" placeholder="Project Description"></textarea>
-                    <input name="Projects[${projectIndex}].ProjectAttachments" class="form-control" placeholder="Project Attachment" />
-                    <input name="Projects[${projectIndex}].ProjectLink" class="form-control" placeholder="Project Link" />
-                </div>`;
-            $('#projects-container').append(html);
-            projectIndex++;
-        });
-    </script>
+    <script src="~/js/PortFolioJS/Add.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
 </html>
