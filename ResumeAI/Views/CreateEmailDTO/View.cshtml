@@ -10,13 +10,63 @@
 <head>
     <meta charset="utf-8" />
     <title>@ViewData["Title"]</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/css/CreateEmailCSS/View.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .email-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .email-card {
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 750px;
+        }
+
+        .email-header {
+            border-bottom: 1px solid #dee2e6;
+            margin-bottom: 24px;
+        }
+
+            .email-header h2 {
+                font-weight: 600;
+            }
+
+        .email-meta p {
+            margin: 4px 0;
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        .email-body p {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn-back {
+            padding: 0.5rem 1.2rem;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body>
     <div class="container my-5 email-container">
-        <div class="email-card mx-auto" style="max-width: 800px;">
-            <h2 class="mb-4 text-primary">Your Generated Email</h2>
+        <div class="email-card">
+            <div class="email-header">
+                <h2 class="text-dark mb-2">📧 Your Generated Email</h2>
+            </div>
+
             <div class="email-meta mb-4">
                 <p><strong>Subject:</strong> @Model.Subject</p>
                 <p><strong>To:</strong> @Model.RecipientName</p>
@@ -25,19 +75,22 @@
                 <p><strong>Tone:</strong> @Model.Tone</p>
                 <p><strong>Purpose:</strong> @Model.Purpose</p>
             </div>
-            <hr />
+
             <div class="email-body mt-4">
                 <p>Dear <strong>@Model.RecipientName</strong>,</p>
                 <p>@Model.Purpose</p>
+
                 @if (!string.IsNullOrWhiteSpace(Model.AdditionalInfo))
                 {
                     <p>@Model.AdditionalInfo</p>
                 }
+
                 <p class="mt-4">Sincerely,</p>
                 <p><strong>@Model.SenderName</strong></p>
             </div>
+
             <div class="text-end mt-4">
-                <a asp-action="Index" class="btn btn-outline-primary btn-back">Back to Create</a>
+                <a asp-action="Index" class="btn btn-outline-primary btn-back">← Back to Create</a>
             </div>
         </div>
     </div>

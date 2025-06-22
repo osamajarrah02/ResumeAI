@@ -96,5 +96,46 @@ namespace ResumeAI.Controllers
 
             return View(model);
         }
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> Edit()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized();
+
+            var model = await _createEmail.GetEmailByUserIdAsync(userId);
+            if (model == null)
+                return NotFound("Email not found for the given user ID.");
+
+            return View(model);
+        }
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(CreateEmailDTO model)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized();
+
+            var updatedEmail = new CreateEmail
+            {
+                UserId = userId,
+                EmailType = model.EmailType?.Trim(),
+                Subject = model.Subject?.Trim(),
+                RecipientName = model.RecipientName?.Trim(),
+                SenderName = model.SenderName?.Trim(),
+                Tone = model.Tone?.Trim(),
+                Purpose = model.Purpose?.Trim(),
+                AdditionalInfo = model.AdditionalInfo?.Trim()
+            };
+
+            var success = await _createEmail.UpdateGeneratedEmailAsync(updatedEmail);
+            if (!success)
+                return NotFound("No existing email to update.");
+
+            return RedirectToAction("View");
+        }
     }
 }

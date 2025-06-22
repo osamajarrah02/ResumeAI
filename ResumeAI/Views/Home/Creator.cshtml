@@ -1,8 +1,4 @@
-﻿@{
-    Layout = null;
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -10,36 +6,14 @@
     <title>Creator AI - Landing</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet" />
-    <!-- Font Awesome (for icons) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
-    <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <style>
         body {
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-            color: white;
+            background: #ffffff;
+            color: #222;
             font-family: 'Segoe UI', sans-serif;
             overflow-x: hidden;
         }
-
-        .custom-navbar {
-            background: rgba(0, 0, 0, 0.4); /* Transparent black */
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            transition: background 0.3s ease;
-            z-index: 999;
-        }
-
-        .custom-navbar .nav-link {
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .custom-navbar .nav-link:hover {
-            color: #66d9ef;
-        }
-
 
         .hero-section {
             min-height: 100vh;
@@ -48,41 +22,30 @@
             justify-content: center;
             padding: 60px 20px;
             position: relative;
+            background: linear-gradient(135deg, #e0f7ff, #f9f9f9);
         }
 
         .hero-content h1 {
             font-size: 3rem;
             font-weight: 800;
             line-height: 1.2;
-            animation: fadeInDown 1s ease-in-out;
         }
 
         .hero-content p {
             font-size: 1.25rem;
             margin-top: 20px;
-            opacity: 0.85;
-            animation: fadeInUp 1s ease-in-out;
-        }
-
-        .hero-buttons {
-            margin-top: 30px;
-            animation: fadeInUp 1.2s ease-in-out;
+            opacity: 0.9;
         }
 
         .btn-modern {
-            background: linear-gradient(135deg, #89f7fe, #66a6ff);
+            background: linear-gradient(135deg, #66a6ff, #89f7fe);
             border: none;
             padding: 12px 24px;
             font-weight: 600;
             border-radius: 50px;
             box-shadow: 0 6px 20px rgba(102, 166, 255, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            color: #fff;
         }
-
-            .btn-modern:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 10px 25px rgba(102, 166, 255, 0.5);
-            }
 
         .btn-outline-modern {
             border: 2px solid #66a6ff;
@@ -92,104 +55,220 @@
             font-weight: 600;
             border-radius: 50px;
             margin-left: 15px;
-            transition: all 0.3s ease;
         }
 
-            .btn-outline-modern:hover {
-                background-color: #66a6ff;
-                color: #fff;
-                box-shadow: 0 8px 24px rgba(102, 166, 255, 0.3);
+        .info-section, .usage-section, .testimonial-section {
+            padding: 80px 20px;
+        }
+
+        .info-section {
+            background-color: #f9f9f9;
+        }
+
+        .usage-section {
+            background-color: #ffffff;
+        }
+
+        .testimonial-section {
+            background-color: #f1f6fb;
+        }
+
+        .testimonial-card {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .testimonial-stars i {
+            color: gold;
+        }
+
+        #creators {
+            background: white;
+        }
+
+        .creator-card {
+            border-radius: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+            display: block;
+        }
+
+            .creator-card:hover,
+            .creator-card:focus-visible {
+                transform: translateY(-10px);
+                box-shadow: 0 15px 30px rgba(102, 166, 255, 0.4);
+                background: rgba(255, 255, 255, 0.12);
+                text-decoration: none;
+                outline: none;
             }
 
-        @@media (max-width: 768px) {
-            .hero-content h1
+            .creator-card:active {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 15px rgba(102, 166, 255, 0.5);
+                background: rgba(255, 255, 255, 0.15);
+            }
 
-        {
-            font-size: 2.2rem;
+        .card-title {
+            letter-spacing: 0.05em;
         }
-
-        .btn-outline-modern {
-            margin-left: 0;
-            margin-top: 15px;
-        }
-
-        .hero-buttons {
-            display: flex;
-            flex-direction: column;
-            align-items: start;
-        }
-
+        /* Override btn-link default styles */
+        .btn-link {
+            color: inherit;
         }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg fixed-top custom-navbar">
-        <div class="container-fluid px-4">
-            <!-- Left: Logo Text -->
-            <a class="navbar-brand fw-bold text-white" href="/">SkillSet</a>
-
-            <!-- Toggle for mobile -->
-            <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#creatorNavbar" aria-controls="creatorNavbar" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <!-- Center: Nav Links -->
-            <div class="collapse navbar-collapse justify-content-center" id="creatorNavbar">
-                <ul class="navbar-nav mb-2 mb-lg-0 gap-3">
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#">DeFi App</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Assets</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Features</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Pricing</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#">FAQ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-outline-light rounded-pill px-3 py-1 d-flex align-items-center gap-2" href="#">
-                            Protection <i class="fa fa-arrow-up-right-from-square"></i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Right: Profile Link -->
-            <div class="d-flex align-items-center">
-                <a href="/Profile" class="text-white d-flex align-items-center gap-2 text-decoration-none">
-                    <i class="fa fa-user"></i>
-                    <span>Profile</span>
-                </a>
-            </div>
-        </div>
-    </nav>
-
-    <!-- 🌟 Header / Hero Section -->
     <section class="hero-section">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-7 hero-content">
                     <h1 class="animate__animated animate__fadeInDown">SkillSet — Build with REDAI</h1>
                     <p class="animate__animated animate__fadeInUp">
-                        Let REDAI, help you craft stunning resumes, portfolios, emails, and cover letters — fast, beautiful, and effortless.
+                        Let REDAI help you craft stunning resumes, portfolios, emails, and cover letters — fast, beautiful, and effortless.
                         Enhance your job journey and land your dream role with SkillSet.
                     </p>
                     <div class="hero-buttons d-flex flex-wrap mt-4">
-                        <a href="#start" class="btn btn-modern">Get Started</a>
+                        <a href="#creators" class="btn btn-modern">Get Started</a>
                         <a href="#learn-more" class="btn btn-outline-modern">Learn More</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <section class="info-section text-center">
+        <div class="container">
+            <h2 class="fw-bold mb-4">What is SkillSet?</h2>
+            <p class="lead">
+                SkillSet is your AI-powered companion for professional growth. Whether you're building a CV, showcasing your portfolio,
+                writing a cover letter, or composing the perfect email — we simplify and amplify your efforts.
+            </p>
+        </div>
+    </section>
+
+    <section class="usage-section text-center">
+        <div class="container">
+            <h2 class="fw-bold mb-4">How REDAI Works</h2>
+            <p class="lead">
+                Just fill in structured fields and text areas for each section. REDAI uses cutting-edge AI to convert your inputs into
+                clean, modern, job-ready assets.
+            </p>
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <i class="fa-solid fa-pen fa-2x text-primary mb-2"></i>
+                    <h5 class="fw-bold">Step 1</h5>
+                    <p>Enter your personal, educational, and work experience details.</p>
+                </div>
+                <div class="col-md-4">
+                    <i class="fa-solid fa-robot fa-2x text-info mb-2"></i>
+                    <h5 class="fw-bold">Step 2</h5>
+                    <p>Let REDAI generate tailored content based on your inputs.</p>
+                </div>
+                <div class="col-md-4">
+                    <i class="fa-solid fa-file-export fa-2x text-success mb-2"></i>
+                    <h5 class="fw-bold">Step 3</h5>
+                    <p>Download or copy your ready-to-use professional documents.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonial-section text-center">
+        <div class="container">
+            <h2 class="fw-bold mb-5">What Users Are Saying</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <h5 class="fw-bold">Maya R.</h5>
+                        <p>"SkillSet gave me the edge I needed for my interviews. The resume and cover letter creators are genius!"</p>
+                        <div class="testimonial-stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <h5 class="fw-bold">Tariq H.</h5>
+                        <p>"Super clean UI and powerful features. REDAI understood exactly what I wanted. 10/10."</p>
+                        <div class="testimonial-stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <h5 class="fw-bold">Lina M.</h5>
+                        <p>"The email creator is amazing. Saved me hours writing professional messages for job outreach!"</p>
+                        <div class="testimonial-stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="creators" class="py-5">
+        <div class="container">
+            <h2 class="text-center text-white mb-5 fw-bold animate__animated animate__fadeInUp">Meet Your AI Creators</h2>
+            <div class="row g-4">
+
+                <!-- Resume Creator -->
+                <div class="col-md-6 col-lg-3">
+                    <a asp-controller="ResumeDTO" asp-action="Index" class="creator-card btn btn-link h-100 p-0 text-decoration-none animate__animated animate__fadeInUp" style="animation-delay: 0.1s;">
+                        <div class="card h-100 border-0 shadow-lg text-center text-white d-flex flex-column justify-content-center p-4">
+                            <i class="fa-solid fa-file-lines fa-3x mb-3 text-info"></i>
+                            <h5 class="card-title fw-bold">Resume Creator</h5>
+                            <p class="card-text text-muted">
+                                Craft stunning, modern resumes tailored to your unique skills and career goals — fast and easy.
+                            </p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Portfolio Creator -->
+                <div class="col-md-6 col-lg-3">
+                    <a asp-controller="PortfolioDTO" asp-action="Index" class="creator-card btn btn-link h-100 p-0 text-decoration-none animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+                        <div class="card h-100 border-0 shadow-lg text-center text-white d-flex flex-column justify-content-center p-4">
+                            <i class="fa-solid fa-briefcase fa-3x mb-3 text-success"></i>
+                            <h5 class="card-title fw-bold">Portfolio Creator</h5>
+                            <p class="card-text text-muted">
+                                Showcase your projects with beautiful, professional portfolios built effortlessly.
+                            </p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Cover Letter Creator -->
+                <div class="col-md-6 col-lg-3">
+                    <a asp-controller="CoverLetterDTO" asp-action="Index" class="creator-card btn btn-link h-100 p-0 text-decoration-none animate__animated animate__fadeInUp" style="animation-delay: 0.3s;">
+                        <div class="card h-100 border-0 shadow-lg text-center text-white d-flex flex-column justify-content-center p-4">
+                            <i class="fa-solid fa-file-signature fa-3x mb-3 text-warning"></i>
+                            <h5 class="card-title fw-bold">Cover Letter Creator</h5>
+                            <p class="card-text text-muted">
+                                Write persuasive cover letters that open doors and make you stand out.
+                            </p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Email Creator -->
+                <div class="col-md-6 col-lg-3">
+                    <a asp-controller="CreateEmailDTO" asp-action="Index" class="creator-card btn btn-link h-100 p-0 text-decoration-none animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">
+                        <div class="card h-100 border-0 shadow-lg text-center text-white d-flex flex-column justify-content-center p-4">
+                            <i class="fa-solid fa-envelope fa-3x mb-3 text-danger"></i>
+                            <h5 class="card-title fw-bold">Email Creator</h5>
+                            <p class="card-text text-muted">
+                                Generate professional, semi-formal, or personal emails with ease.
+                            </p>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
 </body>
 </html>

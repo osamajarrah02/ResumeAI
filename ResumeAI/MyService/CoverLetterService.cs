@@ -5,6 +5,7 @@ using ResumeAI.DTOs;
 using ResumeAI.Interfaces;
 using ResumeAI.Models.CoverLetter;
 using ResumeAI.Models.Person;
+using ResumeAI.Models.Portfolio;
 using ResumeAI.Models.Resume;
 
 namespace ResumeAI.MyService
@@ -43,46 +44,46 @@ namespace ResumeAI.MyService
         public async Task SaveGeneratedCoverLetterAsync(string userId, CoverLetter coverLetter)
         {
             EnsureRequiredFieldsAreFilled(coverLetter);
-            var existing = await _context.CoverLetters
-            .Include(r => r.CoverLetterExperiences)
-            .Include(r => r.CoverLetterSkills)
-            .Include(r => r.CoverLetterLanguages)
-            .FirstOrDefaultAsync(r => r.UserId == userId);
 
-            if (existing != null)
-            {
-                existing.FirstName = coverLetter.FirstName;
-                existing.SecondName = coverLetter.SecondName;
-                existing.ThirdName = coverLetter.ThirdName;
-                existing.Email = coverLetter.Email;
-                existing.PhoneNumber = coverLetter.PhoneNumber;
-                existing.Address = coverLetter.Address;
-                existing.JobTitle = coverLetter.JobTitle;
-                existing.DateOfBirth = coverLetter.DateOfBirth;
-                existing.Summary = coverLetter.Summary;
-                existing.RecipientFullName = coverLetter.RecipientFullName;
-                existing.RecipientAddress = coverLetter.RecipientAddress;
-                existing.Introduction = coverLetter.Introduction;
-                existing.BodyContent = coverLetter.BodyContent;
-                existing.Closing = coverLetter.Closing;
-                existing.SignatureName = coverLetter.SignatureName;
+            coverLetter.UserId = userId;
 
-                _context.CoverLetterExperiences.RemoveRange(existing.CoverLetterExperiences);
-                existing.CoverLetterExperiences = coverLetter.CoverLetterExperiences;
-
-                _context.CoverLetterSkills.RemoveRange(existing.CoverLetterSkills);
-                existing.CoverLetterSkills = coverLetter.CoverLetterSkills;
-
-                _context.CoverLetterLanguages.RemoveRange(existing.CoverLetterLanguages);
-                existing.CoverLetterLanguages = coverLetter.CoverLetterLanguages;
-            }
-            else
-            {
-                coverLetter.UserId = userId;
-                _context.CoverLetters.Add(coverLetter);
-            }
+            _context.CoverLetters.Add(coverLetter);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<bool> UpdateCoverLetterAsync(CoverLetter updated)
+        {
+            var existing = await _context.CoverLetters
+                .Include(c => c.CoverLetterExperiences)
+                .Include(c => c.CoverLetterSkills)
+                .Include(c => c.CoverLetterLanguages)
+                .FirstOrDefaultAsync(c => c.UserId == updated.UserId);
+
+            if (existing == null) return false;
+
+            existing.FirstName = updated.FirstName;
+            existing.SecondName = updated.SecondName;
+            existing.ThirdName = updated.ThirdName;
+            existing.Email = updated.Email;
+            existing.PhoneNumber = updated.PhoneNumber;
+            existing.Address = updated.Address;
+            existing.JobTitle = updated.JobTitle;
+            existing.Summary = updated.Summary;
+            existing.RecipientFullName = updated.RecipientFullName;
+            existing.RecipientAddress = updated.RecipientAddress;
+            existing.Introduction = updated.Introduction;
+            existing.BodyContent = updated.BodyContent;
+            existing.Closing = updated.Closing;
+            existing.SignatureName = updated.SignatureName;
+
+            existing.CoverLetterExperiences = updated.CoverLetterExperiences ?? new();
+            existing.CoverLetterSkills = updated.CoverLetterSkills ?? new();
+            existing.CoverLetterLanguages = updated.CoverLetterLanguages ?? new();
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
         private void EnsureRequiredFieldsAreFilled(CoverLetter coverLetter)
         {
             foreach (var e in coverLetter.CoverLetterExperiences ?? new())

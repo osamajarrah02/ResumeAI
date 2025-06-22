@@ -3,6 +3,7 @@ using ResumeAI.Data;
 using ResumeAI.DTOs;
 using ResumeAI.Interfaces;
 using ResumeAI.Models.Email;
+using ResumeAI.Models.Portfolio;
 
 namespace ResumeAI.MyService
 {
@@ -57,30 +58,32 @@ namespace ResumeAI.MyService
         {
             EnsureRequiredFieldsAreTrimmed(createEmail);
 
-            var existing = await _context.CreateEmails
-                .FirstOrDefaultAsync(e => e.UserId == userId);
+            createEmail.UserId = userId;
 
-            if (existing != null)
-            {
-                existing.EmailType = createEmail.EmailType;
-                existing.Subject = createEmail.Subject;
-                existing.RecipientName = createEmail.RecipientName;
-                existing.SenderName = createEmail.SenderName;
-                existing.Tone = createEmail.Tone;
-                existing.Purpose = createEmail.Purpose;
-                existing.AdditionalInfo = createEmail.AdditionalInfo;
-            }
-            else
-            {
-                _context.CreateEmails.Add(createEmail);
-            }
-
+            _context.CreateEmails.Add(createEmail);
             await _context.SaveChangesAsync();
         }
-        public Task UpdateEmailAsync(CreateEmailDTO createEmailDTO)
+
+        public async Task<bool> UpdateGeneratedEmailAsync(CreateEmail updatedEmail)
         {
-            throw new NotImplementedException();
+            var existing = await _context.CreateEmails
+        .FirstOrDefaultAsync(e => e.UserId == updatedEmail.UserId);
+
+            if (existing == null)
+                return false;
+
+            existing.EmailType = updatedEmail.EmailType;
+            existing.Subject = updatedEmail.Subject;
+            existing.RecipientName = updatedEmail.RecipientName;
+            existing.SenderName = updatedEmail.SenderName;
+            existing.Tone = updatedEmail.Tone;
+            existing.Purpose = updatedEmail.Purpose;
+            existing.AdditionalInfo = updatedEmail.AdditionalInfo;
+
+            await _context.SaveChangesAsync();
+            return true;
         }
+
         private void EnsureRequiredFieldsAreTrimmed(CreateEmail email)
         {
             email.EmailType = email.EmailType?.Trim();

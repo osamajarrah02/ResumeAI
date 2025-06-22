@@ -1,21 +1,66 @@
 ﻿@model ResumeAI.DTOs.PortfolioDTO
 
-<!Doctype html>
-<html>
-	<head></head>
-	<body style="box-sizing: border-box;">
-		<input hidden asp-for="@Model.UserId">
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<h1>Full Name: @Model.PersonFirstName, @Model.PersonLastName</h1>
-		<a class="btn btn-outline-dark" asp-controller="PortFolioDTO" asp-action="Add">Add PortFolio</a>
-	</body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PortFolio Creator for Job Applications</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/CreateEmailCSS/index.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="display-4 fw-bold">Professional PortFolio Creator for Jobs</h1>
+            <p class="lead">Write the perfect job Cover Letter in seconds.</p>
+            <a asp-controller="PortFolioDTO" asp-action="Add" class="btn btn-light btn-lg shadow mt-3">Start Writing PortFolio</a>
+        </div>
+    </header>
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Why Choose Our PortFolio Creator?</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-box h-100">
+                        <h5>Templates that Work</h5>
+                        <p>Choose from proven PortFolio templates that get attention and interviews.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-box h-100">
+                        <h5>Fully Customizable</h5>
+                        <p>Edit subject lines, introductions, body, and closings with AI help.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-box h-100">
+                        <h5>Ready to Send</h5>
+                        <p>Copy, export, or connect directly to your Cover Letter client to send.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="bg-light py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">How It Works</h2>
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <h5>1. Enter Your Info</h5>
+                    <p>Name, role, and company — we do the rest with AI.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>2. Pick a Template</h5>
+                    <p>Select from formal, creative, or confident PortFolio styles.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>3. Send or Copy</h5>
+                    <p>Copy the Url or integrate with Gmail, Outlook, and more.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

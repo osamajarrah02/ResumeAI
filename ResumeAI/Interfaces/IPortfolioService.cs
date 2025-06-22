@@ -1,14 +1,10 @@
 ﻿using ResumeAI.DTOs;
 using ResumeAI.Models.Portfolio;
-using ResumeAI.Models.Resume;
 
-namespace ResumeAI.Interfaces
+public interface IPortfolioService
 {
-    public interface IPortfolioService
-    {
-        Task<PortfolioDTO> GetPortfolioByUserIdAsync(string userId);
-        Task CreatePortfolioAsync(PortfolioDTO portfolioDTO, string userId);
-        Task UpdatePortfolioAsync(PortfolioDTO portfolioDTO);
-        Task SaveGeneratedPortFolioAsync(string userId, Portfolio portfolio);
-    }
+    Task<PortfolioDTO?> GetPortFolioAsync(string userId);
+    Task<Portfolio?> GetPortFolioModelAsync(string userId);
+    Task<bool> UpdatePortfolioAsync(Portfolio portfolio);
+    Task SaveGeneratedPortFolioAsync(string userId, Portfolio portfolio);
 }

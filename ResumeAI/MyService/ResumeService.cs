@@ -54,53 +54,11 @@ public class ResumeService : IResume
     {
         EnsureRequiredFieldsAreFilled(resume);
 
-        var existing = await _context.Resumes
-            .Include(r => r.Certificates)
-            .Include(r => r.Educations)
-            .Include(r => r.Experiences)
-            .Include(r => r.Skills)
-            .Include(r => r.Languages)
-            .Include(r => r.Links)
-            .FirstOrDefaultAsync(r => r.UserId == userId && !r.IsDeleted);
-
-        if (existing != null)
-        {
-            existing.FirstName = resume.FirstName;
-            existing.SecondName = resume.SecondName;
-            existing.ThirdName = resume.ThirdName;
-            existing.Email = resume.Email;
-            existing.PhoneNumber = resume.PhoneNumber;
-            existing.Address = resume.Address;
-            existing.JobTitle = resume.JobTitle;
-            existing.DateOfBirth = resume.DateOfBirth;
-            existing.Summary = resume.Summary;
-
-            _context.Certificates.RemoveRange(existing.Certificates);
-            existing.Certificates = resume.Certificates;
-
-            _context.Educations.RemoveRange(existing.Educations);
-            existing.Educations = resume.Educations;
-
-            _context.Experiences.RemoveRange(existing.Experiences);
-            existing.Experiences = resume.Experiences;
-
-            _context.Skills.RemoveRange(existing.Skills);
-            existing.Skills = resume.Skills;
-
-            _context.Languages.RemoveRange(existing.Languages);
-            existing.Languages = resume.Languages;
-
-            _context.Links.RemoveRange(existing.Links);
-            existing.Links = resume.Links;
-        }
-        else
-        {
-            resume.UserId = userId;
-            resume.ResumeCreatedDate = DateTime.UtcNow.ToString("yyyy-MM-dd");
-            _context.Resumes.Add(resume);
-        }
-
+        resume.UserId = userId;
+        resume.ResumeCreatedDate = DateTime.UtcNow.ToString("yyyy-MM-dd");
         resume.ResumeModifiedDate = DateTime.UtcNow.ToString("yyyy-MM-dd");
+
+        _context.Resumes.Add(resume);
         await _context.SaveChangesAsync();
     }
     public async Task<Resume?> GetResumeModelAsync(string userId)
@@ -177,5 +135,10 @@ public class ResumeService : IResume
         resume.JobTitle = resume.JobTitle?.Trim();
         resume.DateOfBirth = resume.DateOfBirth?.Trim();
         resume.Summary = resume.Summary?.Trim();
+    }
+    public async Task<bool> UpdateResumeAsync(Resume resume)
+    {
+        _context.Resumes.Update(resume);
+        return await _context.SaveChangesAsync() > 0;
     }
 }

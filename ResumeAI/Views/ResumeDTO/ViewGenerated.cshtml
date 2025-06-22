@@ -1,142 +1,152 @@
 ﻿@model ResumeAI.DTOs.ResumeDTO
 
 @{
-    ViewData["Title"] = "My Generated Resume";
+    ViewData["Title"] = "Modern Resume";
     Layout = null;
 }
 
-<!Doctype html>
-<html>
-    <head>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet" />
-    </head>
-    <body>
-        <div class="container my-5 animate__animated animate__fadeIn">
-            <div class="bg-white p-4 rounded shadow-lg">
-                <h2 class="text-center fw-bold mb-4">@Model.FirstName @Model.SecondName @Model.LastName</h2>
-                <p class="text-center">@Model.JobTitle</p>
-                <hr />
-
-                <div class="row mb-3 text-center">
-                    <div class="col-md-3">
-                        <p><strong>Email:</strong> @Model.Email</p>
-                    </div>
-                    <div class="col-md-3">
-                        <p><strong>Phone:</strong> @Model.PhoneNumber</p>
-                    </div>
-                    <div class="col-md-3">
-                        <p><strong>Date of Birth:</strong> @Model.DateOfBirth</p>
-                    </div>
-                    <div class="col-md-3">
-                        <p><strong>Address:</strong> @Model.Address</p>
-                    </div>
-                </div>
-
-                <div class="mb-4">
-                    <h4 class="text-primary">Summary</h4>
-                    <p>@Model.Summary</p>
-                </div>
-
-                @if (Model.Educations?.Any() == true)
-                {
-                    <div class="mb-4">
-                        <h4 class="text-primary">Education</h4>
-                        <ul class="list-group">
-                            @foreach (var edu in Model.Educations)
-                            {
-                                <li class="list-group-item">
-                                    <strong>@edu.Degree</strong> in @edu.FieldOfStudy at @edu.InstitutionName
-                                    <br /><small>@edu.StartDate - @edu.EndDate | GPA: @edu.GPA</small>
-                                    <br />@edu.Description
-                                </li>
-                            }
-                        </ul>
-                    </div>
-                }
-
-                @if (Model.Experiences?.Any() == true)
-                {
-                    <div class="mb-4">
-                        <h4 class="text-primary">Experience</h4>
-                        <ul class="list-group">
-                            @foreach (var exp in Model.Experiences)
-                            {
-                                <li class="list-group-item">
-                                    <strong>@exp.JobTitle</strong> at @exp.CompanyName (@exp.EmploymentType)
-                                    <br /><small>@exp.StartDate - @exp.EndDate | @exp.CompanyLocation</small>
-                                    <br />@exp.Description
-                                </li>
-                            }
-                        </ul>
-                    </div>
-                }
-
-                @if (Model.Certificates?.Any() == true)
-                {
-                    <div class="mb-4">
-                        <h4 class="text-primary">Certificates</h4>
-                        <ul class="list-group">
-                            @foreach (var cert in Model.Certificates)
-                            {
-                                <li class="list-group-item">
-                                    <strong>@cert.CourseName</strong> - @cert.InstitutionName (@cert.CertificateType)
-                                    <br /><small>@cert.StartDate - @cert.EndDate | GPA: @cert.GPA</small>
-                                </li>
-                            }
-                        </ul>
-                    </div>
-                }
-
-                @if (Model.Skills?.Any() == true)
-                {
-                    <div class="mb-4">
-                        <h4 class="text-primary">Skills</h4>
-                        <ul class="list-inline">
-                            @foreach (var skill in Model.Skills)
-                            {
-                                <li class="list-inline-item badge rounded-pill bg-secondary p-2 m-1">
-                                    @skill.SkillName (@skill.SkillCategory)
-                                </li>
-                            }
-                        </ul>
-                    </div>
-                }
-
-                @if (Model.Languages?.Any() == true)
-                {
-                    <div class="mb-4">
-                        <h4 class="text-primary">Languages</h4>
-                        <ul class="list-inline">
-                            @foreach (var lang in Model.Languages)
-                            {
-                                <li class="list-inline-item badge rounded-pill bg-info text-dark p-2 m-1">
-                                    @lang.LanguageName (@lang.ProficiencyLevel)
-                                </li>
-                            }
-                        </ul>
-                    </div>
-                }
-
-                @if (Model.Links?.Any() == true)
-                {
-                    <div class="mb-4">
-                        <h4 class="text-primary">Links</h4>
-                        <ul class="list-group">
-                            @foreach (var link in Model.Links)
-                            {
-                                <li class="list-group-item">
-                                    <a href="@link.LinkUrl" target="_blank">@link.LinkName</a>
-                                </li>
-                            }
-                        </ul>
-                    </div>
-                }
-
-                <div class="text-center mt-4">
-                    <a href="@Url.Action("Index")" class="btn btn-outline-primary">Back to Dashboard</a>
-                </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,300,700" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="~/css/ResumeCSS/View1.css" />
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="full-name">
+                <span class="first-name">@Model.FirstName</span>
+                <span class="middle-name">@Model.SecondName</span>
+                <span class="last-name">@Model.LastName</span>
+            </div>
+            <div class="contact-info">
+                <span>Email: @Model.Email</span>
+                <span class="separator">|</span>
+                <span>Phone: @Model.PhoneNumber</span>
+            </div>
+            <div class="about">
+                <span class="position">@Model.JobTitle</span>
+                <span class="desc">@Model.Summary</span>
             </div>
         </div>
-    </body>
+
+        <div class="details">
+
+            @if (Model.Experiences?.Any() == true)
+            {
+                <div class="section">
+                    <div class="section__title">Experience</div>
+                    <div class="section__list">
+                        @foreach (var exp in Model.Experiences)
+                        {
+                            <div class="section__list-item">
+                                <div class="left">
+                                    <div class="name">@exp.CompanyName</div>
+                                    <div class="addr">@exp.CompanyLocation</div>
+                                    <div class="duration">@exp.StartDate - @exp.EndDate</div>
+                                </div>
+                                <div class="right">
+                                    <div class="name">@exp.JobTitle</div>
+                                    <div class="desc">@exp.Description</div>
+                                    <div class="type">@exp.EmploymentType</div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+
+            @if (Model.Educations?.Any() == true)
+            {
+                <div class="section">
+                    <div class="section__title">Education</div>
+                    <div class="section__list">
+                        @foreach (var edu in Model.Educations)
+                        {
+                            <div class="section__list-item">
+                                <div class="left">
+                                    <div class="name">@edu.InstitutionName</div>
+                                    <div class="addr">@edu.FieldOfStudy</div>
+                                    <div class="duration">@edu.StartDate - @edu.EndDate</div>
+                                </div>
+                                <div class="right">
+                                    <div class="name">@edu.Degree</div>
+                                    <div class="desc">@edu.Description</div>
+                                    <div class="duration">GPA: @edu.GPA</div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+
+            @if (Model.Certificates?.Any() == true)
+            {
+                <div class="section">
+                    <div class="section__title">Certificates</div>
+                    <div class="section__list">
+                        @foreach (var cert in Model.Certificates)
+                        {
+                            <div class="section__list-item">
+                                <div class="name">@cert.CourseName</div>
+                                <div class="desc">@cert.InstitutionName (@cert.CertificateType) | GPA: @cert.GPA</div>
+                                <div class="duration">@cert.StartDate - @cert.EndDate</div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+
+            @if (Model.Skills?.Any() == true)
+            {
+                <div class="section">
+                    <div class="section__title">Skills</div>
+                    <div class="skills">
+                        @foreach (var skill in Model.Skills)
+                        {
+                            <div class="skills__item">
+                                <div class="left">@skill.SkillName</div>
+                                <div class="right">@skill.SkillCategory</div>
+                                <div class="desc">@skill.SkillDescription</div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+
+            @if (Model.Languages?.Any() == true)
+            {
+                <div class="section">
+                    <div class="section__title">Languages</div>
+                    <div class="section__list">
+                        @foreach (var lang in Model.Languages)
+                        {
+                            <div class="section__list-item">
+                                <div class="name">@lang.LanguageName</div>
+                                <div class="desc">@lang.ProficiencyLevel</div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+
+            @if (Model.Links?.Any() == true)
+            {
+                <div class="section">
+                    <div class="section__title">Links</div>
+                    <div class="section__list">
+                        @foreach (var link in Model.Links)
+                        {
+                            <div class="section__list-item">
+                                <a href="@link.LinkUrl" target="_blank">@link.LinkName</a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</body>
 </html>

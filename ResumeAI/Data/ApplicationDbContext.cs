@@ -32,5 +32,17 @@ namespace ResumeAI.Data
         public DbSet<CoverLetterExperience> CoverLetterExperiences { get; set; }
         public DbSet<CoverLetterSkill> CoverLetterSkills { get; set; }
         public DbSet<CoverLetterLanguage> CoverLetterLanguages { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            // Configure discriminator for Person inheritance
+            builder.Entity<Person>()
+                .HasDiscriminator<string>("Discriminator")
+                .HasValue<Person>("Person")
+                .HasValue<User>("User")
+                .HasValue<Admin>("Admin");
+        }
     }
 }

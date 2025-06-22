@@ -8,6 +8,7 @@ namespace ResumeAI.DTOs
         public string PersonLastName { get; set; }
         public string EmailType { get; set; }
         public string Subject { get; set; }
+        public string Id { get; set; }
         public string RecipientName { get; set; }
         public string SenderName { get; set; }
         public string Tone { get; set; }

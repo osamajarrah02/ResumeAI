@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ResumeAI.Data;
 
@@ -11,9 +12,11 @@ using ResumeAI.Data;
 namespace ResumeAI.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250622051620_Update1")]
+    partial class Update1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -904,13 +907,6 @@ namespace ResumeAI.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Resumes");
-                });
-
-            modelBuilder.Entity("ResumeAI.Models.Person.Admin", b =>
-                {
-                    b.HasBaseType("ResumeAI.Models.Person.Person");
-
-                    b.HasDiscriminator().HasValue("Admin");
                 });
 
             modelBuilder.Entity("ResumeAI.Models.Person.User", b =>

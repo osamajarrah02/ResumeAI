@@ -19,8 +19,11 @@ namespace ResumeAI.Controllers
     {
         private readonly ICoverLetter _coverLetter;
         private readonly ICoverLetterParser _coverLetterParser;
-        
-        public CoverLetterDTOController(UserManager<Person> userManager, ICoverLetter coverLetter, ICoverLetterParser coverLetterParser)
+
+        public CoverLetterDTOController(
+            UserManager<Person> userManager, 
+            ICoverLetter coverLetter, 
+            ICoverLetterParser coverLetterParser)
         {
             _coverLetter = coverLetter;
             _coverLetterParser = coverLetterParser;
@@ -150,6 +153,116 @@ namespace ResumeAI.Controllers
                 }).ToList(),
             };
             return View(dto);
+        }
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Edit()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null) return Unauthorized();
+
+            var model = await _coverLetter.GetCoverLetterModelAsync(userId);
+            if (model == null) return NotFound();
+
+            var dto = new CoverLetterDTO
+            {
+                FirstName = model.FirstName,
+                SecondName = model.SecondName,
+                ThirdName = model.ThirdName,
+                Email = model.Email,
+                PhoneNumber = model.PhoneNumber,
+                Address = model.Address,
+                JobTitle = model.JobTitle,
+                Summary = model.Summary,
+                RecipientFullName = model.RecipientFullName,
+                RecipientAddress = model.RecipientAddress,
+                Introduction = model.Introduction,
+                BodyContent = model.BodyContent,
+                Closing = model.Closing,
+                SignatureName = model.SignatureName,
+
+                CoverLetterExperiences = model.CoverLetterExperiences.Select(e => new CoverLetterExperienceDTO
+                {
+                    JobTitle = e.JobTitle,
+                    CompanyName = e.CompanyName,
+                    CompanyLocation = e.CompanyLocation,
+                    StartDate = e.StartDate,
+                    EndDate = e.EndDate,
+                    EmploymentType = e.EmploymentType,
+                    Description = e.Description
+                }).ToList(),
+
+                CoverLetterSkills = model.CoverLetterSkills.Select(s => new CoverLetterSkillDTO
+                {
+                    SkillName = s.SkillName,
+                    SkillCategory = s.SkillCategory,
+                    SkillDescription = s.SkillDescription
+                }).ToList(),
+
+                CoverLetterLanguages = model.CoverLetterLanguages.Select(l => new CoverLetterLanguageDTO
+                {
+                    LanguageName = l.LanguageName,
+                    ProficiencyLevel = l.ProficiencyLevel
+                }).ToList(),
+            };
+
+            return View(dto);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public async Task<IActionResult> Edit(CoverLetterDTO coverLetterDTO)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null) return Unauthorized();
+
+            var coverLetter = new CoverLetter
+            {
+                UserId = userId,
+                FirstName = coverLetterDTO.FirstName,
+                SecondName = coverLetterDTO.SecondName,
+                ThirdName = coverLetterDTO.ThirdName,
+                Email = coverLetterDTO.Email,
+                PhoneNumber = coverLetterDTO.PhoneNumber,
+                Address = coverLetterDTO.Address,
+                JobTitle = coverLetterDTO.JobTitle,
+                Summary = coverLetterDTO.Summary,
+                RecipientFullName = coverLetterDTO.RecipientFullName,
+                RecipientAddress = coverLetterDTO.RecipientAddress,
+                Introduction = coverLetterDTO.Introduction,
+                BodyContent = coverLetterDTO.BodyContent,
+                Closing = coverLetterDTO.Closing,
+                SignatureName = coverLetterDTO.SignatureName,
+
+                CoverLetterExperiences = coverLetterDTO.CoverLetterExperiences?.Select(e => new CoverLetterExperience
+                {
+                    JobTitle = e.JobTitle,
+                    CompanyName = e.CompanyName,
+                    CompanyLocation = e.CompanyLocation,
+                    StartDate = e.StartDate,
+                    EndDate = e.EndDate,
+                    EmploymentType = e.EmploymentType,
+                    Description = e.Description
+                }).ToList(),
+
+                CoverLetterSkills = coverLetterDTO.CoverLetterSkills?.Select(s => new CoverLetterSkill
+                {
+                    SkillName = s.SkillName,
+                    SkillCategory = s.SkillCategory,
+                    SkillDescription = s.SkillDescription
+                }).ToList(),
+
+                CoverLetterLanguages = coverLetterDTO.CoverLetterLanguages?.Select(l => new CoverLetterLanguage
+                {
+                    LanguageName = l.LanguageName,
+                    ProficiencyLevel = l.ProficiencyLevel
+                }).ToList(),
+            };
+
+            var success = await _coverLetter.UpdateCoverLetterAsync(coverLetter);
+            if (!success) return NotFound("Cover letter not found");
+
+            return RedirectToAction("ViewGenerated");
         }
     }
 }

@@ -1,0 +1,134 @@
+﻿@model ResumeAI.DTOs.DocumentDTO
+@{
+    ViewData["Title"] = "Your Documents";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Documents</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+</head>
+<body class="container mt-4">
+    <h2 class="mb-4">Documents of @Model.FullName</h2>
+
+    <!-- Resumes -->
+    <h3>Resumes</h3>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Created Date</th>
+                <th>Modified Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var resume in Model.Resumes)
+            {
+                <tr>
+                    <td>@resume.Title</td>
+                    <td>@resume.Summary</td>
+                    <td>@(resume.ResumeCreatedDate?.ToString("yyyy-MM-dd") ?? "-")</td>
+                    <td>@(resume.ResumeModifiedDate?.ToString("yyyy-MM-dd") ?? "-")</td>
+                    <td>
+                        <a class="btn btn-sm btn-primary" href="@Url.Action("Edit", "ResumeDTO", new { id = resume.Id })">Edit</a>
+                        <a class="btn btn-sm btn-danger" href="@Url.Action("Delete", "ResumeDTO", new { id = resume.Id })">Delete</a>
+                        <a class="btn btn-sm btn-info" href="@Url.Action("View", "ResumeDTO", new { id = resume.Id })">View</a>
+                        <a class="btn btn-sm btn-success" href="@Url.Action("", "ResumeDTO", new { id = resume.Id })">PDF</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h3 class="mt-5">Portfolios</h3>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Created Date</th>
+                <th>Modified Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var portfolio in Model.Portfolios)
+            {
+                <tr>
+                    <td>@portfolio.JobTitle</td>
+                    <td>@portfolio.Summary</td>
+                    <td>@(portfolio.PortFolioCreatedDate?.ToString("yyyy-MM-dd") ?? "-")</td>
+                    <td>@(portfolio.PortFolioModifiedDate?.ToString("yyyy-MM-dd") ?? "-")</td>
+                    <td>
+                        <a class="btn btn-sm btn-primary" href="@Url.Action("Edit", "PortFolioDTO", new { id = portfolio.Id })">Edit</a>
+                        <a class="btn btn-sm btn-danger" href="@Url.Action("Delete", "PortFolioDTO", new { id = portfolio.Id })">Delete</a>
+                        <a class="btn btn-sm btn-info" href="@Url.Action("View", "PortFolioDTO", new { id = portfolio.Id })">View</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <h3 class="mt-5">Cover Letters</h3>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Name</th>
+                <th>Recipient name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var coverLetter in Model.CoverLetters)
+            {
+                <tr>
+                    <td>@coverLetter.JobTitle</td>
+                    <td>@coverLetter.Summary</td>
+                    <td>@coverLetter.FirstName</td>
+                    <td>@coverLetter.RecipientFullName</td>
+                    <td>
+                        <a class="btn btn-sm btn-primary" href="@Url.Action("Edit", "CoverLetterDTO", new { id = coverLetter.Id })">Edit</a>
+                        <a class="btn btn-sm btn-danger" href="@Url.Action("Delete", "CoverLetterDTO", new { id = coverLetter.Id })">Delete</a>
+                        <a class="btn btn-sm btn-info" href="@Url.Action("View", "CoverLetterDTO", new { id = coverLetter.Id })">View</a>
+                        <a class="btn btn-sm btn-success" href="@Url.Action("", "CoverLetterDTO", new { id = coverLetter.Id })">PDF</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <h3 class="mt-5">Emails</h3>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Recipient name</th>
+                <th>Sender name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var createEmail in Model.Emails)
+            {
+                <tr>
+                    <td>@createEmail.EmailType</td>
+                    <td>@createEmail.Subject</td>
+                    <td>@createEmail.RecipientName</td>
+                    <td>@createEmail.SenderName</td>
+                    <td>
+                        <a class="btn btn-sm btn-primary" href="@Url.Action("Edit", "CreateEmailDTO", new { id = createEmail.Id })">Edit</a>
+                        <a class="btn btn-sm btn-danger" href="@Url.Action("Delete", "CreateEmailDTO", new { id = createEmail.Id })">Delete</a>
+                        <a class="btn btn-sm btn-info" href="@Url.Action("View", "CreateEmailDTO", new { id = createEmail.Id })">View</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

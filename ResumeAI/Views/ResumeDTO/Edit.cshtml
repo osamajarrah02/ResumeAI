@@ -1,0 +1,176 @@
+﻿@model ResumeAI.DTOs.ResumeDTO
+
+@{
+    ViewData["Title"] = "Edit Resume";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Edit Resume</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Edit Your Resume</h2>
+        <form asp-action="Edit" method="post">
+            @Html.AntiForgeryToken()
+
+            <div id="resumeWizard">
+                <!-- Step 1: Personal Info -->
+                <div class="step">
+                    <h4>Personal Information</h4>
+                    <div class="mb-3">
+                        <input asp-for="FirstName" class="form-control" placeholder="First Name" />
+                    </div>
+                    <div class="mb-3">
+                        <input asp-for="SecondName" class="form-control" placeholder="Second Name" />
+                    </div>
+                    <div class="mb-3">
+                        <input asp-for="LastName" class="form-control" placeholder="Last Name" />
+                    </div>
+                    <div class="mb-3">
+                        <input asp-for="Email" class="form-control" placeholder="Email" />
+                    </div>
+                    <div class="mb-3">
+                        <input asp-for="PhoneNumber" class="form-control" placeholder="Phone Number" />
+                    </div>
+                    <div class="mb-3">
+                        <input asp-for="JobTitle" class="form-control" placeholder="Job Title" />
+                    </div>
+                    <div class="mb-3">
+                        <input asp-for="DateOfBirth" type="date" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <input asp-for="Address" class="form-control" placeholder="Address" />
+                    </div>
+                    <div class="mb-3">
+                        <textarea asp-for="Summary" class="form-control" placeholder="Professional Summary" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <!-- Step 2: Education -->
+                <div class="step d-none">
+                    <h4>Education</h4>
+                    <div id="educationsContainer">
+                        @for (int i = 0; i < Model.Educations.Count; i++)
+                        {
+                            <div class="border rounded p-3 mb-3 bg-light">
+                                <input asp-for="Educations[@i].InstitutionName" class="form-control mb-2" placeholder="Institution Name" />
+                                <input asp-for="Educations[@i].Degree" class="form-control mb-2" placeholder="Degree" />
+                                <input asp-for="Educations[@i].FieldOfStudy" class="form-control mb-2" placeholder="Field of Study" />
+                                <input asp-for="Educations[@i].StartDate" type="date" class="form-control mb-2" />
+                                <input asp-for="Educations[@i].EndDate" type="date" class="form-control mb-2" />
+                                <input asp-for="Educations[@i].GPA" class="form-control mb-2" placeholder="GPA" />
+                                <textarea asp-for="Educations[@i].Description" class="form-control mb-2" placeholder="Description"></textarea>
+                                <div class="form-check">
+                                    <input asp-for="Educations[@i].IsCompleted" class="form-check-input" />
+                                    <label class="form-check-label">Completed</label>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <button type="button" class="btn btn-outline-primary mb-3" onclick="addEducation()">+ Add Education</button>
+                </div>
+
+                <!-- Step 3: Experience -->
+                <div class="step d-none">
+                    <h4>Experience</h4>
+                    <div id="experiencesContainer">
+                        @for (int i = 0; i < Model.Experiences.Count; i++)
+                        {
+                            <div class="border rounded p-3 mb-3 bg-light">
+                                <input asp-for="Experiences[@i].JobTitle" class="form-control mb-2" placeholder="Job Title" />
+                                <input asp-for="Experiences[@i].CompanyName" class="form-control mb-2" placeholder="Company Name" />
+                                <input asp-for="Experiences[@i].CompanyLocation" class="form-control mb-2" placeholder="Location" />
+                                <input asp-for="Experiences[@i].StartDate" type="date" class="form-control mb-2" />
+                                <input asp-for="Experiences[@i].EndDate" type="date" class="form-control mb-2" />
+                                <textarea asp-for="Experiences[@i].Description" class="form-control mb-2" placeholder="Description"></textarea>
+                                <div class="form-check">
+                                    <input asp-for="Experiences[@i].IsCurrent" class="form-check-input" />
+                                    <label class="form-check-label">Currently Working</label>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <button type="button" class="btn btn-outline-primary mb-3" onclick="addExperience()">+ Add Experience</button>
+                </div>
+
+                <!-- Step 4: Skills + Languages -->
+                <div class="step d-none">
+                    <h4>Skills</h4>
+                    <div id="skillsContainer">
+                        @for (int i = 0; i < Model.Skills.Count; i++)
+                        {
+                            <div class="border rounded p-3 mb-3 bg-light">
+                                <input asp-for="Skills[@i].SkillName" class="form-control mb-2" placeholder="Skill Name" />
+                                <input asp-for="Skills[@i].SkillCategory" class="form-control mb-2" placeholder="Category" />
+                                <textarea asp-for="Skills[@i].SkillDescription" class="form-control mb-2" placeholder="Description"></textarea>
+                            </div>
+                        }
+                    </div>
+                    <button type="button" class="btn btn-outline-primary mb-3" onclick="addSkill()">+ Add Skill</button>
+
+                    <h4 class="mt-4">Languages</h4>
+                    <div id="languagesContainer">
+                        @for (int i = 0; i < Model.Languages.Count; i++)
+                        {
+                            <div class="border rounded p-3 mb-3 bg-light">
+                                <input asp-for="Languages[@i].LanguageName" class="form-control mb-2" placeholder="Language" />
+                                <input asp-for="Languages[@i].ProficiencyLevel" class="form-control mb-2" placeholder="Proficiency Level" />
+                                <div class="form-check">
+                                    <input asp-for="Languages[@i].IsNative" class="form-check-input" />
+                                    <label class="form-check-label">Native</label>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <button type="button" class="btn btn-outline-primary mb-3" onclick="addLanguage()">+ Add Language</button>
+                </div>
+
+                <!-- Step 5: Certificates + Links -->
+                <div class="step d-none">
+                    <h4>Certificates</h4>
+                    <div id="certificatesContainer">
+                        @for (int i = 0; i < Model.Certificates.Count; i++)
+                        {
+                            <div class="border rounded p-3 mb-3 bg-light">
+                                <input asp-for="Certificates[@i].CourseName" class="form-control mb-2" placeholder="Course Name" />
+                                <input asp-for="Certificates[@i].InstitutionName" class="form-control mb-2" placeholder="Institution" />
+                                <input asp-for="Certificates[@i].GPA" class="form-control mb-2" placeholder="GPA" />
+                                <input asp-for="Certificates[@i].CertificateType" class="form-control mb-2" placeholder="Type" />
+                                <input asp-for="Certificates[@i].StartDate" type="date" class="form-control mb-2" />
+                                <input asp-for="Certificates[@i].EndDate" type="date" class="form-control mb-2" />
+                            </div>
+                        }
+                    </div>
+                    <button type="button" class="btn btn-outline-primary mb-3" onclick="addCertificate()">+ Add Certificate</button>
+
+                    <h4 class="mt-4">Links</h4>
+                    <div id="linksContainer">
+                        @for (int i = 0; i < Model.Links.Count; i++)
+                        {
+                            <div class="border rounded p-3 mb-3 bg-light">
+                                <input asp-for="Links[@i].LinkName" class="form-control mb-2" placeholder="Link Name" />
+                                <input asp-for="Links[@i].LinkUrl" class="form-control mb-2" placeholder="URL" />
+                            </div>
+                        }
+                    </div>
+                    <button type="button" class="btn btn-outline-primary mb-3" onclick="addLink()">+ Add Link</button>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="mt-4 text-center">
+                    <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
+                    <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
+                    <button type="submit" class="btn btn-success d-none" id="submitBtn">Save Changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="~/js/CreateJS/Details.js"></script>
+</body>
+</html>

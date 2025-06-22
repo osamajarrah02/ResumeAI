@@ -1,0 +1,38 @@
+﻿@media (max-width: 991.98px) {
+    .sidebar {
+        position: relative !important;
+        width: 100% !important;
+        top: auto !important;
+        left: auto !important;
+        margin-bottom: 2rem;
+        padding: 1rem;
+        border-radius: 10px;
+        box-shadow: none !important;
+        font-size: 1rem;
+    }
+
+    .floating-box {
+        display: none !important;
+    }
+}
+
+@media (max-width: 575.98px) {
+    header .typed {
+        font-size: 1.2rem !important;
+    }
+
+    .sidebar ul li {
+        font-size: 1rem !important;
+    }
+
+    .sidebar button.create-resume-btn {
+        font-size: 1rem !important;
+        padding: 0.7rem 1rem !important;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .container .row > div[class*="col-"] {
+        margin-bottom: 1.5rem;
+    }
+}

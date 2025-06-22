@@ -1,3 +1,5 @@
+﻿using DinkToPdf;
+using DinkToPdf.Contracts;
 using HTU_FinalProject.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +8,7 @@ using Microsoft.SemanticKernel;
 using ResumeAI.Data;
 using ResumeAI.Interfaces;
 using ResumeAI.Models.Person;
+using ResumeAI.Models.Portfolio;
 using ResumeAI.MyService;
 
 namespace ResumeAI
@@ -23,6 +26,7 @@ namespace ResumeAI
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             builder.Services.AddDefaultIdentity<Person>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<IResume, ResumeService>();

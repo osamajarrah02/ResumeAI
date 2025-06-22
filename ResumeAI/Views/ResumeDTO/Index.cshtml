@@ -1,24 +1,66 @@
 ﻿@model ResumeAI.DTOs.ResumeDTO
 
-<h1>@Model.PersonFirstName</h1>
-<h1>@Model.PersonLastName</h1>
-
-@if (!string.IsNullOrEmpty(Model.ImageBase64))
-{
-    <div style="width: 150px; height: 150px; border-radius: 50%; overflow: hidden; border: 2px solid #ccc; margin-bottom: 10px;">
-        <img src="data:image/png;base64,@Model.ImageBase64" alt="Profile Image"
-             style="width: 100%; height: 100%; object-fit: cover; display: block;" />
-    </div>
-}
-else
-{
-    <p>No profile image uploaded.</p>
-}
-
-<form asp-action="Index" method="post" enctype="multipart/form-data">
-    <div>
-        <label for="ImageFile">Upload New Profile Image:</label>
-        <input type="file" name="ImageFile" />
-    </div>
-    <button type="submit">Upload</button>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Creator for Job Applications</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/CreateEmailCSS/index.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="display-4 fw-bold">Professional Resume Creator for Jobs</h1>
+            <p class="lead">Write the perfect job Cover Letter in seconds.</p>
+            <a asp-controller="ResumeDTO" asp-action="Create" class="btn btn-light btn-lg shadow mt-3">Start Writing Resume</a>
+        </div>
+    </header>
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Why Choose Our Resume Creator?</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-box h-100">
+                        <h5>Templates that Work</h5>
+                        <p>Choose from proven Resume templates that get attention and interviews.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-box h-100">
+                        <h5>Fully Customizable</h5>
+                        <p>Edit subject lines, introductions, body, and closings with AI help.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-box h-100">
+                        <h5>Ready to Send</h5>
+                        <p>Copy, export, or connect directly to your Cover Letter client to send.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="bg-light py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">How It Works</h2>
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <h5>1. Enter Your Info</h5>
+                    <p>Name, role, and company — we do the rest with AI.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>2. Pick a Template</h5>
+                    <p>Select from formal, creative, or confident Resume styles.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>3. Send or Copy</h5>
+                    <p>Copy the Copy or integrate with Gmail, Outlook, and more.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
