@@ -5,6 +5,6 @@ namespace ResumeAI.Interfaces
 {
     public interface ICreateEmailParser
     {
-        Task<CreateEmail> ParseEmailAsync(string rawText);
+        Task<string> ParseEmailAsync(string rawText);
     }
 }

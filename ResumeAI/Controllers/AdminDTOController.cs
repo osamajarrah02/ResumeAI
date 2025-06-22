@@ -26,7 +26,6 @@ namespace ResumeAI.Controllers
             var resumes = await _context.Resumes.ToListAsync();
             var portfolios = await _context.Portfolios.ToListAsync();
             var coverLetters = await _context.CoverLetters.ToListAsync();
-            var emails = await _context.CreateEmails.ToListAsync();
 
             var model = new AdminDashboardDTO
             {
@@ -34,7 +33,6 @@ namespace ResumeAI.Controllers
                 ResumesCount = resumes.Count,
                 PortfoliosCount = portfolios.Count,
                 CoverLettersCount = coverLetters.Count,
-                EmailsCount = emails.Count
             };
 
             return View(model);

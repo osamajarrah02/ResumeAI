@@ -1,58 +1,58 @@
-﻿using System.Text.Json;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.SemanticKernel;
+﻿using Microsoft.SemanticKernel;
 using ResumeAI.Interfaces;
-using ResumeAI.Models.Email;
-using ResumeAI.Models.Portfolio;
+using System.Threading.Tasks;
 
 namespace ResumeAI.MyService
 {
     public class EmailParser : ICreateEmailParser
     {
-        Kernel _kernel;
+        private readonly Kernel _kernel;
+
         public EmailParser(Kernel kernel)
         {
             _kernel = kernel;
         }
-        public async Task<CreateEmail> ParseEmailAsync(string rawText)
+
+        public async Task<string> ParseEmailAsync(string rawText)
         {
             var prompt = @"
-            You are a professional email writing assistant.
+            You are a helpful email assistant.
 
-            From the given text, extract the following fields and return them as a JSON object. Do NOT include explanations, commentary, or extra formatting. Output ONLY valid JSON.
+            Your task is:
+            1. Understand the user's message.
+            2. If they want to write an email, try to extract these fields:
+               - EmailType
+               - Subject
+               - RecipientName
+               - SenderName
+               - Tone
+               - Purpose
+               - AdditionalInfo
 
-            If any field is unknown, use an empty string or null.
+            If some fields are missing, ask them clearly and politely one by one:
+            - Example: ""What is the subject of the email?""
+            Only ask what's still missing.
 
-            Extract and return this format:
-            {
-              ""Subject"": ""..."",
-              ""RecipientName"": ""..."",
-              ""SenderName"": ""..."",
-              ""Tone"": ""..."",  // Formal, Friendly, Semi-formal
-              ""Purpose"": ""..."",
-              ""AdditionalInfo"": ""..."",
-              ""PersonFirstName"": ""..."",
-              ""PersonLastName"": ""...""
-            }
+            Once you have all the fields, generate a complete email message using them.
 
-            PORTFOLIO OR RESUME TEXT:
+            Do NOT return JSON or code. Just return plain text:
+            - Ask questions if needed.
+            - Or generate a professional email if you have everything.
+
+            User Message:
             {{ $input }}
 
-            JSON:
+            Response:
             ";
+
             var extractFunction = _kernel.CreateFunctionFromPrompt(prompt);
 
             var result = await _kernel.InvokeAsync(extractFunction, new()
             {
                 ["input"] = rawText
             });
-            var json = result.ToString();
 
-            var email = JsonSerializer.Deserialize<CreateEmail>(json, new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            });
-            return email!;
+            return result.ToString();
         }
     }
 }

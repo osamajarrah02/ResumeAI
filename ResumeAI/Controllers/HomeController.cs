@@ -52,7 +52,6 @@ namespace ResumeAI.Controllers
                 ResumeCount = await _context.Resumes.CountAsync(r => r.UserId == userId && !r.IsDeleted),
                 PortfolioCount = await _context.Portfolios.CountAsync(p => p.UserId == userId && !p.IsDeleted),
                 CoverLetterCount = await _context.CoverLetters.CountAsync(c => c.UserId == userId),
-                EmailCount = await _context.CreateEmails.CountAsync(e => e.UserId == userId)
             };
 
             return View(dto);
@@ -105,10 +104,6 @@ namespace ResumeAI.Controllers
 
             var coverLetters = await _context.CoverLetters
                 .Where(c => c.UserId == userId)
-                .ToListAsync();
-
-            var emails = await _context.CreateEmails
-                .Where(e => e.UserId == userId)
                 .ToListAsync();
 
             var model = new DocumentDTO
@@ -180,20 +175,6 @@ namespace ResumeAI.Controllers
                     Closing = c.Closing,
                     SignatureName = c.SignatureName
                 }).ToList(),
-
-                Emails = emails.Select(e => new CreateEmailDTO
-                {
-                    PersonFirstName = user.PersonFirstName,
-                    PersonLastName = user.PersonLastName,
-                    EmailType = e.EmailType,
-                    Subject = e.Subject,
-                    RecipientName = e.RecipientName,
-                    SenderName = e.SenderName,
-                    Tone = e.Tone,
-                    Purpose = e.Purpose,
-                    AdditionalInfo = e.AdditionalInfo,
-                    UserId = e.UserId
-                }).ToList()
             };
 
             return View(model);

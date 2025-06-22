@@ -1,0 +1,181 @@
+﻿@{
+    ViewData["Title"] = "Chat with Email Assistant";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+<style>
+    body, html {
+        height: 100%;
+        background: #f7f8fa;
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    .chat-container {
+        max-width: 700px;
+        margin: 40px auto;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+        display: flex;
+        flex-direction: column;
+        height: 80vh;
+    }
+
+    .chat-messages {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+        border-bottom: 1px solid #ddd;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .message {
+        max-width: 75%;
+        padding: 12px 20px;
+        border-radius: 25px;
+        font-size: 1rem;
+        line-height: 1.3;
+        word-wrap: break-word;
+    }
+
+        .message.user {
+            background-color: #0d6efd;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message.ai {
+            background-color: #e9ecef;
+            color: #333;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+            white-space: pre-wrap;
+        }
+
+    .chat-input {
+        padding: 15px;
+        display: flex;
+        gap: 10px;
+        border-top: 1px solid #ddd;
+    }
+
+        .chat-input textarea {
+            flex: 1;
+            resize: none;
+            padding: 10px 15px;
+            border-radius: 25px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            height: 50px;
+            font-family: inherit;
+        }
+
+        .chat-input button {
+            background-color: #0d6efd;
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 0 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+            .chat-input button:hover:not(:disabled) {
+                background-color: #084298;
+            }
+
+            .chat-input button:disabled {
+                background-color: #a2cdf9;
+                cursor: not-allowed;
+            }
+</style>
+
+<div class="chat-container">
+    <div id="chatMessages" class="chat-messages"></div>
+    <form id="chatForm" class="chat-input" onsubmit="return sendMessage(event);">
+        @Html.AntiForgeryToken()
+        <textarea id="userInput" placeholder="Type your message..." required></textarea>
+        <button type="submit">Send</button>
+    </form>
+</div>
+
+<script>
+    const chatMessages = document.getElementById("chatMessages");
+    const userInput = document.getElementById("userInput");
+
+    let collectedEmailData = {
+        emailType: "",
+        subject: "",
+        recipientName: "",
+        senderName: "",
+        tone: "",
+        purpose: "",
+        additionalInfo: ""
+    };
+
+    function appendMessage(text, sender) {
+        const msgDiv = document.createElement("div");
+        msgDiv.classList.add("message", sender);
+        msgDiv.textContent = text;
+        chatMessages.appendChild(msgDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    async function sendMessage(event) {
+        event.preventDefault();
+        const message = userInput.value.trim();
+        if (!message) return;
+
+        appendMessage(message, "user");
+        userInput.value = "";
+        userInput.disabled = true;
+
+        const loadingMsg = document.createElement("div");
+        loadingMsg.classList.add("message", "ai");
+        loadingMsg.textContent = "Typing...";
+        chatMessages.appendChild(loadingMsg);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        try {
+            const response = await fetch("/CreateEmailDTO/Chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: new URLSearchParams({ userMessage: message })
+            });
+
+            const data = await response.json();
+            chatMessages.removeChild(loadingMsg);
+
+            if (data.reply) {
+                appendMessage(data.reply, "ai");
+
+                const lowerReply = data.reply.toLowerCase();
+                if (lowerReply.includes("email type")) collectedEmailData.emailType = message;
+                else if (lowerReply.includes("subject")) collectedEmailData.subject = message;
+                else if (lowerReply.includes("recipient")) collectedEmailData.recipientName = message;
+                else if (lowerReply.includes("sender")) collectedEmailData.senderName = message;
+                else if (lowerReply.includes("tone")) collectedEmailData.tone = message;
+                else if (lowerReply.includes("purpose")) collectedEmailData.purpose = message;
+                else if (lowerReply.includes("additional")) collectedEmailData.additionalInfo = message;
+
+            } else {
+                appendMessage("⚠️ Unexpected server response.", "ai");
+            }
+        } catch (error) {
+            chatMessages.removeChild(loadingMsg);
+            appendMessage("⚠️ Error contacting server. Please try again.", "ai");
+        }
+
+        userInput.disabled = false;
+        userInput.focus();
+        return false;
+    }
+</script>
