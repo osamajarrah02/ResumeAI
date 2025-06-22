@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -6,10 +7,10 @@ using ResumeAI.DTOs;
 using ResumeAI.Interfaces;
 using ResumeAI.Models.Email;
 using ResumeAI.Models.Person;
-using ResumeAI.MyService;
 
 namespace ResumeAI.Controllers
 {
+    [Authorize]
     public class CreateEmailDTOController : Controller
     {
         private readonly ICreateEmail _createEmail;
@@ -26,7 +27,6 @@ namespace ResumeAI.Controllers
             _createEmailParser = createEmailParser;
         }
 
-        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -38,53 +38,67 @@ namespace ResumeAI.Controllers
             if (user == null)
                 return NotFound("User Not Found");
 
-            var createEmailDto = new CreateEmailDTO
+            var model = new CreateEmailDTO
             {
                 PersonFirstName = user.PersonFirstName,
                 PersonLastName = user.PersonLastName
             };
 
-            return View(createEmailDto);
+            return View(model);
         }
 
-        [Authorize]
         [HttpGet]
-        public IActionResult Add()
+        public IActionResult Chat()
         {
-            return View(new CreateEmailDTO());
+            return View();
         }
 
-        [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Create(CreateEmailDTO model, [FromForm] string rawText)
+        public async Task<IActionResult> Chat([FromForm] string userMessage)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (userId == null)
+            if (string.IsNullOrEmpty(userId))
                 return Unauthorized();
 
-            CreateEmail createEmail;
+            if (string.IsNullOrWhiteSpace(userMessage))
+                return Json(new { reply = "Please enter a message." });
 
-            var portfolio = await _createEmailParser.ParseEmailAsync(rawText);
-
-            createEmail = new CreateEmail
+            try
             {
-                UserId = userId,
-                EmailType = model.EmailType,
-                Subject = model.Subject,
-                RecipientName = model.RecipientName,
-                SenderName = model.SenderName,
-                Tone = model.Tone,
-                Purpose = model.Purpose,
-                AdditionalInfo = model.AdditionalInfo
-            };
+                var aiResponse = await _createEmailParser.ParseEmailAsync(userMessage);
 
-            await _createEmail.SaveGeneratedEmailAsync(userId, createEmail);
-            return RedirectToAction("View");
+                if (string.IsNullOrWhiteSpace(aiResponse))
+                {
+                    return Json(new { reply = "Sorry, I didn't understand that." });
+                }
+
+                return Json(new { reply = aiResponse.Trim() });
+            }
+            catch
+            {
+                return Json(new { reply = "⚠️ Error contacting server. Please try again." });
+            }
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SubmitEmailDetails([FromBody] CreateEmailDTO emailDetails)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized();
 
-        [Authorize]
+            if (emailDetails == null)
+                return BadRequest(new { success = false, message = "Email details are required." });
+
+            if (!ModelState.IsValid)
+                return BadRequest(new { success = false, message = "Invalid email details." });
+
+            await _createEmail.CreateEmailAsync(emailDetails, userId);
+
+            return Json(new { success = true, message = "Email saved successfully." });
+        }
         [HttpGet]
-        public async Task<IActionResult> View()
+        public async Task<IActionResult> ViewEmail()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrEmpty(userId))
