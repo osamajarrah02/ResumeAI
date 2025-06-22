@@ -362,3 +362,5 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /ResumeAI/appsettings.json
+/ResumeAI/.gitignore.txt
+/ResumeAI/appsettings.json
