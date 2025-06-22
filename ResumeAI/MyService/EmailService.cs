@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ResumeAI.Data;
 using ResumeAI.DTOs;
 using ResumeAI.Interfaces;
 using ResumeAI.Models.Email;
+using ResumeAI.Models.Portfolio;
 
 namespace ResumeAI.MyService
 {
@@ -52,44 +53,6 @@ namespace ResumeAI.MyService
                 UserId = model.UserId,
                 User = model.User
             };
-        }
-        public async Task SaveGeneratedEmailAsync(string userId, CreateEmail createEmail)
-        {
-            EnsureRequiredFieldsAreTrimmed(createEmail);
-
-            var existing = await _context.CreateEmails
-                .FirstOrDefaultAsync(e => e.UserId == userId);
-
-            if (existing != null)
-            {
-                existing.EmailType = createEmail.EmailType;
-                existing.Subject = createEmail.Subject;
-                existing.RecipientName = createEmail.RecipientName;
-                existing.SenderName = createEmail.SenderName;
-                existing.Tone = createEmail.Tone;
-                existing.Purpose = createEmail.Purpose;
-                existing.AdditionalInfo = createEmail.AdditionalInfo;
-            }
-            else
-            {
-                _context.CreateEmails.Add(createEmail);
-            }
-
-            await _context.SaveChangesAsync();
-        }
-        public Task UpdateEmailAsync(CreateEmailDTO createEmailDTO)
-        {
-            throw new NotImplementedException();
-        }
-        private void EnsureRequiredFieldsAreTrimmed(CreateEmail email)
-        {
-            email.EmailType = email.EmailType?.Trim();
-            email.Subject = email.Subject?.Trim();
-            email.RecipientName = email.RecipientName?.Trim();
-            email.SenderName = email.SenderName?.Trim();
-            email.Tone = email.Tone?.Trim();
-            email.Purpose = email.Purpose?.Trim();
-            email.AdditionalInfo = email.AdditionalInfo?.Trim();
         }
     }
 }
