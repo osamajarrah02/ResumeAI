@@ -8,9 +8,6 @@ using ResumeAI.Interfaces;
 using ResumeAI.Models.CoverLetter;
 using ResumeAI.Models.CoverLetter.Details;
 using ResumeAI.Models.Person;
-using ResumeAI.Models.Resume;
-using ResumeAI.Models.Resume.Details;
-using ResumeAI.MyService;
 
 namespace ResumeAI.Controllers
 {

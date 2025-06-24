@@ -87,69 +87,74 @@
                             </section>
                             <section>
                                 <h5 class="mb-3 text-primary">Experiences</h5>
-                                @for (int i = 0; i < 3; i++)
-                                {
-                                    <div class="border p-3 rounded mb-3 bg-light">
+                                <div id="experience-container">
+                                    <div class="experience-item border p-3 rounded mb-3 bg-light">
                                         <div class="row mb-2">
                                             <div class="col-md-4">
-                                                <input name="CoverLetterExperiences[@i].JobTitle" class="form-control" placeholder="Job Title" />
+                                                <input name="CoverLetterExperiences[0].JobTitle" class="form-control" placeholder="Job Title" />
                                             </div>
                                             <div class="col-md-4">
-                                                <input name="CoverLetterExperiences[@i].CompanyName" class="form-control" placeholder="Company" />
+                                                <input name="CoverLetterExperiences[0].CompanyName" class="form-control" placeholder="Company" />
                                             </div>
                                             <div class="col-md-4">
-                                                <input name="CoverLetterExperiences[@i].CompanyLocation" class="form-control" placeholder="Location" />
+                                                <input name="CoverLetterExperiences[0].CompanyLocation" class="form-control" placeholder="Location" />
                                             </div>
                                         </div>
                                         <div class="row mb-2">
                                             <div class="col-md-3">
-                                                <input name="CoverLetterExperiences[@i].StartDate" class="form-control" placeholder="Start Date" />
+                                                <input name="CoverLetterExperiences[0].StartDate" class="form-control" placeholder="Start Date" />
                                             </div>
                                             <div class="col-md-3">
-                                                <input name="CoverLetterExperiences[@i].EndDate" class="form-control" placeholder="End Date" />
+                                                <input name="CoverLetterExperiences[0].EndDate" class="form-control" placeholder="End Date" />
                                             </div>
                                             <div class="col-md-3">
-                                                <input name="CoverLetterExperiences[@i].EmploymentType" class="form-control" placeholder="Type" />
+                                                <input name="CoverLetterExperiences[0].EmploymentType" class="form-control" placeholder="Type" />
                                             </div>
                                         </div>
-                                        <textarea name="CoverLetterExperiences[@i].Description" class="form-control" rows="2" placeholder="Role Description"></textarea>
+                                        <textarea name="CoverLetterExperiences[0].Description" class="form-control" rows="2" placeholder="Role Description"></textarea>
                                     </div>
-                                }
+                                </div>
+                                <div class="text-end mb-4">
+                                    <button type="button" class="btn btn-outline-primary" onclick="addExperience()">Add Experience</button>
+                                </div>
                             </section>
                             <section>
                                 <h5 class="mb-3 text-primary">Skills</h5>
-                                @for (int i = 0; i < 3; i++)
-                                {
-                                    <div class="border p-3 rounded mb-3 bg-light">
+                                <div id="skills-container">
+                                    <div class="skill-item border p-3 rounded mb-3 bg-light">
                                         <div class="row mb-2">
                                             <div class="col-md-6">
-                                                <input name="CoverLetterSkills[@i].SkillName" class="form-control" placeholder="Skill" />
+                                                <input name="CoverLetterSkills[0].SkillName" class="form-control" placeholder="Skill" />
                                             </div>
                                             <div class="col-md-6">
-                                                <input name="CoverLetterSkills[@i].SkillCategory" class="form-control" placeholder="Category" />
+                                                <input name="CoverLetterSkills[0].SkillCategory" class="form-control" placeholder="Category" />
                                             </div>
                                         </div>
-                                        <textarea name="CoverLetterSkills[@i].SkillDescription" class="form-control" rows="2" placeholder="Details"></textarea>
+                                        <textarea name="CoverLetterSkills[0].SkillDescription" class="form-control" rows="2" placeholder="Details"></textarea>
                                     </div>
-                                }
+                                </div>
+                                <div class="text-end mb-4">
+                                    <button type="button" class="btn btn-outline-primary" onclick="addSkill()">Add Skill</button>
+                                </div>
                             </section>
                             <section>
                                 <h5 class="mb-3 text-primary">Languages</h5>
-                                @for (int i = 0; i < 3; i++)
-                                {
-                                    <div class="border p-3 rounded mb-3 bg-light">
+                                <div id="language-container">
+                                    <div class="language-item border p-3 rounded mb-3 bg-light">
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <input name="CoverLetterLanguages[@i].LanguageName" class="form-control" placeholder="Language" />
+                                                <input name="CoverLetterLanguages[0].LanguageName" class="form-control" placeholder="Language" />
                                             </div>
                                             <div class="col-md-6">
-                                                <input name="CoverLetterLanguages[@i].ProficiencyLevel" class="form-control" placeholder="Proficiency" />
+                                                <input name="CoverLetterLanguages[0].ProficiencyLevel" class="form-control" placeholder="Proficiency" />
                                             </div>
                                         </div>
                                     </div>
-                                }
+                                </div>
+                                <div class="text-end mb-4">
+                                    <button type="button" class="btn btn-outline-primary" onclick="addLanguage()">Add Language</button>
+                                </div>
                             </section>
-
                             <div class="text-center mt-4">
                                 <button type="submit" class="btn btn-success px-5">Submit</button>
                                 <a class="btn btn-outline-dark px-5" asp-controller="Home" asp-action="Creator">Return</a>
@@ -161,6 +166,86 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/CoverLetterJS/Add.js"></script>
+    <script>
+        let languageIndex = 1;
+        let experienceIndex = 1;
+        let skillIndex = 1;
+
+        function addLanguage() {
+            const container = document.getElementById("language-container");
+            const newItem = document.createElement("div");
+            newItem.className = "language-item border p-3 rounded mb-3 bg-light";
+            newItem.innerHTML = `
+                <div class="row">
+                    <div class="col-md-6">
+                        <input name="CoverLetterLanguages[${languageIndex}].LanguageName" class="form-control" placeholder="Language" />
+                    </div>
+                    <div class="col-md-6">
+                        <input name="CoverLetterLanguages[${languageIndex}].ProficiencyLevel" class="form-control" placeholder="Proficiency" />
+                    </div>
+                </div>
+                <div class="text-end mt-2">
+                    <button type="button" class="btn btn-sm btn-danger" onclick="this.closest('.language-item').remove()">Remove</button>
+                </div>`;
+            container.appendChild(newItem);
+            languageIndex++;
+        }
+
+        function addExperience() {
+            const container = document.getElementById("experience-container");
+            const newItem = document.createElement("div");
+            newItem.className = "experience-item border p-3 rounded mb-3 bg-light";
+            newItem.innerHTML = `
+                <div class="row mb-2">
+                    <div class="col-md-4">
+                        <input name="CoverLetterExperiences[${experienceIndex}].JobTitle" class="form-control" placeholder="Job Title" />
+                    </div>
+                    <div class="col-md-4">
+                        <input name="CoverLetterExperiences[${experienceIndex}].CompanyName" class="form-control" placeholder="Company" />
+                    </div>
+                    <div class="col-md-4">
+                        <input name="CoverLetterExperiences[${experienceIndex}].CompanyLocation" class="form-control" placeholder="Location" />
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-3">
+                        <input name="CoverLetterExperiences[${experienceIndex}].StartDate" class="form-control" placeholder="Start Date" />
+                    </div>
+                    <div class="col-md-3">
+                        <input name="CoverLetterExperiences[${experienceIndex}].EndDate" class="form-control" placeholder="End Date" />
+                    </div>
+                    <div class="col-md-3">
+                        <input name="CoverLetterExperiences[${experienceIndex}].EmploymentType" class="form-control" placeholder="Type" />
+                    </div>
+                </div>
+                <textarea name="CoverLetterExperiences[${experienceIndex}].Description" class="form-control" rows="2" placeholder="Role Description"></textarea>
+                <div class="text-end mt-2">
+                    <button type="button" class="btn btn-sm btn-danger" onclick="this.closest('.experience-item').remove()">Remove</button>
+                </div>`;
+            container.appendChild(newItem);
+            experienceIndex++;
+        }
+
+        function addSkill() {
+            const container = document.getElementById("skills-container");
+            const newItem = document.createElement("div");
+            newItem.className = "skill-item border p-3 rounded mb-3 bg-light";
+            newItem.innerHTML = `
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        <input name="CoverLetterSkills[${skillIndex}].SkillName" class="form-control" placeholder="Skill" />
+                    </div>
+                    <div class="col-md-6">
+                        <input name="CoverLetterSkills[${skillIndex}].SkillCategory" class="form-control" placeholder="Category" />
+                    </div>
+                </div>
+                <textarea name="CoverLetterSkills[${skillIndex}].SkillDescription" class="form-control" rows="2" placeholder="Details"></textarea>
+                <div class="text-end mt-2">
+                    <button type="button" class="btn btn-sm btn-danger" onclick="this.closest('.skill-item').remove()">Remove</button>
+                </div>`;
+            container.appendChild(newItem);
+            skillIndex++;
+        }
+    </script>
 </body>
 </html>

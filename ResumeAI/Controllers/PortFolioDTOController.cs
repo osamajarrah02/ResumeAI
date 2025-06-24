@@ -7,8 +7,6 @@ using ResumeAI.DTOs.Details;
 using ResumeAI.Interfaces;
 using ResumeAI.Models.Person;
 using ResumeAI.Models.Portfolio;
-using ResumeAI.Models.Resume.Details;
-using ResumeAI.MyService;
 
 namespace ResumeAI.Controllers
 {

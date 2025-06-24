@@ -1,7 +1,4 @@
-﻿using ResumeAI.Models.Email;
-using ResumeAI.Models.Portfolio;
-
-namespace ResumeAI.Interfaces
+﻿namespace ResumeAI.Interfaces
 {
     public interface ICreateEmailParser
     {

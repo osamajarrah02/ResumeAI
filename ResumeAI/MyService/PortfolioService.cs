@@ -5,7 +5,6 @@ using ResumeAI.Data;
 using ResumeAI.DTOs;
 using ResumeAI.Models.Person;
 using ResumeAI.Models.Portfolio;
-using ResumeAI.Interfaces;
 
 public class PortfolioService : IPortfolioService
 {

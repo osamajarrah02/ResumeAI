@@ -1,11 +1,9 @@
 ﻿using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ResumeAI.DTOs;
 using ResumeAI.Interfaces;
-using ResumeAI.Models.Email;
 using ResumeAI.Models.Person;
 
 namespace ResumeAI.Controllers
@@ -19,12 +17,12 @@ namespace ResumeAI.Controllers
 
         public CreateEmailDTOController(
             UserManager<Person> userManager,
-            ICreateEmail createEmail,
-            ICreateEmailParser createEmailParser)
+            ICreateEmailParser createEmailParser,
+            ICreateEmail createEmail)
         {
             _userManager = userManager;
-            _createEmail = createEmail;
             _createEmailParser = createEmailParser;
+            _createEmail = createEmail;
         }
 
         [HttpGet]
@@ -96,19 +94,6 @@ namespace ResumeAI.Controllers
             await _createEmail.CreateEmailAsync(emailDetails, userId);
 
             return Json(new { success = true, message = "Email saved successfully." });
-        }
-        [HttpGet]
-        public async Task<IActionResult> ViewEmail()
-        {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (string.IsNullOrEmpty(userId))
-                return Unauthorized();
-
-            var model = await _createEmail.GetEmailByUserIdAsync(userId);
-            if (model == null)
-                return NotFound("Email not found for the given user ID.");
-
-            return View(model);
         }
     }
 }

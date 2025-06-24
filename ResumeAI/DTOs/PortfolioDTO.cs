@@ -34,24 +34,5 @@ namespace ResumeAI.DTOs
             Services = new List<ServiceDTO>();
             Projects = new List<ProjectDTO>();
         }
-
-        public string BuildCombinedPersonalInfo()
-        {
-            var parts = new string?[]
-            {
-                FirstName,
-                SecondName,
-                ThirdName,
-                JobTitle,
-                Email,
-                PhoneNumber,
-                Summary,
-                Address,
-                DateOfBirth,
-                JobTitle,
-                Id,
-            };
-            return string.Join(" | ", parts.Where(p => !string.IsNullOrWhiteSpace(p)));
-        }
     }
 }

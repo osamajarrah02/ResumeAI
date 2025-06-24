@@ -1,4 +1,7 @@
 ﻿@model ResumeAI.DTOs.ProfileDTO
+@{
+    Layout = null;
+}
 
 <!Doctype html>
 <html lang="en">
@@ -11,15 +14,28 @@
         <link rel="stylesheet" href="~/css/HomeCSS/Profile.css" />
     </head>
     <body>
-        <div class="container mt-5">
+        <div class="container mt-5 pb-5 pt-5">
             <div class="row justify-content-center">
                 <div class="col-md-8 profile-card text-center">
-                    <form asp-action="UploadProfileImage" method="post" enctype="multipart/form-data" id="imageForm">
-                        <input type="file" name="profileImage" id="profileImageInput" accept="image/*" style="display:none" onchange="previewImage()" />
-                        <img src="@Model.ImageBase64" id="profileImagePreview" class="profile-image mb-3" alt="Profile Picture" onclick="document.getElementById('profileImageInput').click()" style="cursor: pointer;" />
-                        <button type="submit" class="btn btn-sm btn-outline-primary mt-2">Save Image</button>
+                    <form asp-action="UploadProfileImage" method="post" enctype="multipart/form-data" id="imageForm" class="text-center">
+                    <div class="mb-3 position-relative d-inline-block">
+                        <label for="profileImageInput" style="cursor: pointer;">
+                            <input type="file" name="profileImage" id="profileImageInput" accept="image/*" onchange="previewImage()" class="d-none" />
+                            <img src="@Model.ImageBase64" alt="Profile Image"
+                                 class="rounded-circle shadow border profile-img mb-2"
+                                 style="width: 150px; height: 150px; object-fit: cover;" alt="Profile Picture"
+                                 onclick="document.getElementById('profileImageInput').click()" style="cursor: pointer;" />
+                        </label>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-primary btn-sm mt-2">
+                            <i class="bi bi-upload"></i> Save Image
+                        </button>
+                        <button class="btn btn-primary btn-sm mt-2">
+                            <i class="bi bi-upload"></i> Settings
+                        </button>
+                    </div>
                     </form>
-
                     <h2 class="mb-1">@Model.FullName</h2>
                     <p class="text-muted">@Model.Email</p>
 
@@ -37,29 +53,23 @@
                         </div>
                     </div>
 
-                    <div class="row text-center mt-5">
-                        <div class="col-md-3">
+                    <div class="row text-center mt-4">
+                        <div class="col-md-4">
                             <div class="card counts-card p-3">
                                 <h5>Resumes</h5>
                                 <h4>@Model.ResumeCount</h4>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="card counts-card p-3">
                                 <h5>Portfolios</h5>
                                 <h4>@Model.PortfolioCount</h4>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="card counts-card p-3">
                                 <h5>Cover Letters</h5>
                                 <h4>@Model.CoverLetterCount</h4>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card counts-card p-3">
-                                <h5>Emails</h5>
-                                <h4>@Model.EmailCount</h4>
                             </div>
                         </div>
                     </div>

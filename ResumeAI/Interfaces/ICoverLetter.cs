@@ -1,7 +1,5 @@
 ﻿using ResumeAI.DTOs;
 using ResumeAI.Models.CoverLetter;
-using ResumeAI.Models.Email;
-using ResumeAI.Models.Resume;
 
 namespace ResumeAI.Interfaces
 {

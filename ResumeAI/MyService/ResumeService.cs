@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using HTU_FinalProject.Interfaces;
+﻿using HTU_FinalProject.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ResumeAI.Data;

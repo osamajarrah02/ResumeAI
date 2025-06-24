@@ -1,6 +1,5 @@
 ﻿using Microsoft.SemanticKernel;
 using ResumeAI.Interfaces;
-using System.Threading.Tasks;
 
 namespace ResumeAI.MyService
 {

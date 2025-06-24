@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
+@using ResumeAI.Models.Person
+@inject UserManager<Person> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -19,14 +24,31 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/Identity/Account/Login">Creator</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Contact Us</a></li>
+                    <li class="nav-item">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a class="nav-link" asp-controller="Home" asp-action="Creator">Creator</a>
+                        }
+                        else
+                        {
+                            <a class="nav-link" href="/Identity/Account/Login">Creator</a>
+                        }
+                    </li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="AboutUs">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="ContactUs">Contact Us</a></li>
                 </ul>
                 <div class="dropdown">
                     <a class="d-flex align-items-center text-decoration-none dropdown-toggle profile-container"
                        href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://i.pravatar.cc/42" alt="User Profile Image" class="profile-img" />
+                        @inject UserManager<ResumeAI.Models.Person.Person> UserManager
+                        @{
+                            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                            var user = userId != null ? await UserManager.FindByIdAsync(userId) : null;
+                            var image = user?.ProfileImage != null
+                            ? $"data:image/png;base64,{Convert.ToBase64String(user.ProfileImage)}"
+                            : "/images/default.png";
+                        }
+                        <img src="@image" class="profile-img" alt="User Profile Image" />
                         <div class="profile-info">
                             @{
                                 var firstName = User.FindFirst("FirstName")?.Value ?? "Guest";
@@ -46,7 +68,7 @@
                         </div>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end text-small shadow">
-                        <li><a class="dropdown-item" href="/Settings">Settings</a></li>
+                        <li><a class="dropdown-item" asp-controller="Home" asp-action="Setting">Settings</a></li>
                         <li><a class="dropdown-item" asp-controller="Home" asp-action="Profile">Profile</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
@@ -67,27 +89,27 @@
             <div class="row gy-4">
                 <div class="col-12 col-md-4">
                     <h4 class="text-primary fw-bold mb-3">SkillSet AI</h4>
-                    <p class="small text-muted">
+                    <p class="small">
                         Empower your career with AI-crafted resumes, cover letters, emails, and portfolios.
                     </p>
-                    <p class="small text-muted">© 2025 SkillSet AI. All rights reserved.</p>
+                    <p class="small">© 2025 SkillSet AI. All rights reserved.</p>
                 </div>
                 <div class="col-6 col-md-2">
                     <h6 class="text-uppercase fw-bold mb-3">Products</h6>
                     <ul class="list-unstyled small">
-                        <li><a href="#resume-builder" class="text-light text-decoration-none footer-link">Resume Builder</a></li>
-                        <li><a href="#coverletter" class="text-light text-decoration-none footer-link">Cover Letter</a></li>
-                        <li><a href="#email" class="text-light text-decoration-none footer-link">Email Writer</a></li>
-                        <li><a href="#portfolio" class="text-light text-decoration-none footer-link">Portfolio Creator</a></li>
+                        <li><a asp-controller="ResumeDTO" asp-action="Index" class="text-light text-decoration-none footer-link">Resume Builder</a></li>
+                        <li><a asp-controller="CoverLetterDTO" asp-action="Index" class="text-light text-decoration-none footer-link">Cover Letter</a></li>
+                        <li><a asp-controller="CreateEmailDTO" asp-action="Index" class="text-light text-decoration-none footer-link">Email Writer</a></li>
+                        <li><a asp-controller="PortfolioDTO" asp-action="Index" class="text-light text-decoration-none footer-link">Portfolio Creator</a></li>
                     </ul>
                 </div>
                 <div class="col-6 col-md-2">
                     <h6 class="text-uppercase fw-bold mb-3">Company</h6>
                     <ul class="list-unstyled small">
-                        <li><a href="#" class="text-light text-decoration-none footer-link">About Us</a></li>
+                        <li><a asp-controller="Home" asp-action="AboutUs" class="text-light text-decoration-none footer-link">About Us</a></li>
                         <li><a href="#" class="text-light text-decoration-none footer-link">Careers</a></li>
                         <li><a href="#" class="text-light text-decoration-none footer-link">Blog</a></li>
-                        <li><a href="#" class="text-light text-decoration-none footer-link">Contact</a></li>
+                        <li><a asp-controller="Home" asp-action="ContactUs" class="text-light text-decoration-none footer-link">Contact</a></li>
                     </ul>
                 </div>
                 <div class="col-12 col-md-4">
@@ -100,10 +122,10 @@
                     </p>
 
                     <div>
-                        <a href="#" class="text-light me-3 fs-5" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="text-light me-3 fs-5" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-light me-3 fs-5" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" class="text-light fs-5" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/jarrahoosama" class="text-light me-3 fs-5" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://x.com/OsamaPain9" class="text-light me-3 fs-5" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.linkedin.com/in/oasamajarrah/" class="text-light me-3 fs-5" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.instagram.com/jarraho_osama/" class="text-light fs-5" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
             </div>

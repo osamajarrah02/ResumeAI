@@ -1,13 +1,13 @@
 ﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ResumeAI.Data;
 using ResumeAI.DTOs;
 using ResumeAI.Models;
 using ResumeAI.Models.Person;
-using ResumeAI.Data;
 
 namespace ResumeAI.Controllers
 {
@@ -33,6 +33,84 @@ namespace ResumeAI.Controllers
         {
             return View();
         }
+        public IActionResult AboutUs()
+        {
+            return View();
+        }
+        public IActionResult ContactUs()
+        {
+            return View();
+        }
+        [Authorize]
+        public async Task<IActionResult> Setting()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null) return RedirectToAction("Login", "Account");
+
+            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            if (user == null) return NotFound();
+
+            var dto = new SettingDTO
+            {
+                FirstName = user.PersonFirstName,
+                LastName = user.PersonLastName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber
+            };
+
+            return View(dto);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Setting(SettingDTO model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+                return NotFound();
+
+            _logger.LogInformation("User {UserId} updated their profile.", user.Id);
+
+            user.PersonFirstName = model.FirstName;
+            user.PersonLastName = model.LastName;
+            user.PhoneNumber = model.PhoneNumber;
+
+            var updateResult = await _userManager.UpdateAsync(user);
+            if (!updateResult.Succeeded)
+            {
+                foreach (var error in updateResult.Errors)
+                    ModelState.AddModelError(string.Empty, error.Description);
+
+                return View(model);
+            }
+            if (!string.IsNullOrEmpty(model.NewPassword) && !string.IsNullOrEmpty(model.ConfirmPassword))
+            {
+                if (model.NewPassword == model.ConfirmPassword)
+                {
+                    var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+                    var passwordResult = await _userManager.ResetPasswordAsync(user, resetToken, model.NewPassword);
+                    if (!passwordResult.Succeeded)
+                    {
+                        foreach (var error in passwordResult.Errors)
+                            ModelState.AddModelError(string.Empty, error.Description);
+
+                        return View(model);
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("ConfirmPassword", "Passwords do not match.");
+                    return View(model);
+                }
+            }
+            await _context.SaveChangesAsync();
+
+            TempData["Message"] = "Profile updated successfully.";
+            return RedirectToAction("Setting");
+        }
         [Authorize]
         public async Task<IActionResult> Profile()
         {
@@ -48,10 +126,7 @@ namespace ResumeAI.Controllers
                 Email = user.Email,
                 ImageBase64 = user.ProfileImage != null
                     ? $"data:image/png;base64,{Convert.ToBase64String(user.ProfileImage)}"
-                    : null,
-                ResumeCount = await _context.Resumes.CountAsync(r => r.UserId == userId && !r.IsDeleted),
-                PortfolioCount = await _context.Portfolios.CountAsync(p => p.UserId == userId && !p.IsDeleted),
-                CoverLetterCount = await _context.CoverLetters.CountAsync(c => c.UserId == userId),
+                    : null
             };
 
             return View(dto);
@@ -74,14 +149,9 @@ namespace ResumeAI.Controllers
             }
 
             var result = await _userManager.UpdateAsync(user);
-            if (result.Succeeded)
-            {
-                TempData["Message"] = "Profile image updated successfully.";
-            }
-            else
-            {
-                TempData["Message"] = "Error updating profile image.";
-            }
+            TempData["Message"] = result.Succeeded
+                ? "Profile image updated successfully."
+                : "Error updating profile image.";
 
             return RedirectToAction("Profile");
         }

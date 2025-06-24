@@ -5,8 +5,6 @@ using ResumeAI.DTOs;
 using ResumeAI.Interfaces;
 using ResumeAI.Models.CoverLetter;
 using ResumeAI.Models.Person;
-using ResumeAI.Models.Portfolio;
-using ResumeAI.Models.Resume;
 
 namespace ResumeAI.MyService
 {

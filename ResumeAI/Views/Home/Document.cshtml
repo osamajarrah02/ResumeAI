@@ -1,10 +1,11 @@
 ﻿@model ResumeAI.DTOs.DocumentDTO
 @{
     ViewData["Title"] = "Your Documents";
+    Layout = null;
 }
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"> 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -97,34 +98,6 @@
                         <a class="btn btn-sm btn-danger" href="@Url.Action("Delete", "CoverLetterDTO", new { id = coverLetter.Id })">Delete</a>
                         <a class="btn btn-sm btn-info" href="@Url.Action("View", "CoverLetterDTO", new { id = coverLetter.Id })">View</a>
                         <a class="btn btn-sm btn-success" href="@Url.Action("", "CoverLetterDTO", new { id = coverLetter.Id })">PDF</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    <h3 class="mt-5">Emails</h3>
-    <table class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>Type</th>
-                <th>Description</th>
-                <th>Recipient name</th>
-                <th>Sender name</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var createEmail in Model.Emails)
-            {
-                <tr>
-                    <td>@createEmail.EmailType</td>
-                    <td>@createEmail.Subject</td>
-                    <td>@createEmail.RecipientName</td>
-                    <td>@createEmail.SenderName</td>
-                    <td>
-                        <a class="btn btn-sm btn-primary" href="@Url.Action("Edit", "CreateEmailDTO", new { id = createEmail.Id })">Edit</a>
-                        <a class="btn btn-sm btn-danger" href="@Url.Action("Delete", "CreateEmailDTO", new { id = createEmail.Id })">Delete</a>
-                        <a class="btn btn-sm btn-info" href="@Url.Action("View", "CreateEmailDTO", new { id = createEmail.Id })">View</a>
                     </td>
                 </tr>
             }

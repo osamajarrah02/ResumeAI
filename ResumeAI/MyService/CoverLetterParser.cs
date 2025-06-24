@@ -2,7 +2,6 @@
 using Microsoft.SemanticKernel;
 using ResumeAI.Interfaces;
 using ResumeAI.Models.CoverLetter;
-using ResumeAI.Models.Resume;
 
 namespace ResumeAI.MyService
 {

@@ -1,6 +1,7 @@
 ﻿using DinkToPdf;
 using DinkToPdf.Contracts;
 using HTU_FinalProject.Interfaces;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -31,8 +32,8 @@ namespace ResumeAI
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<IResume, ResumeService>();
             builder.Services.AddScoped<IPortfolioService, PortfolioService>();
-            builder.Services.AddScoped<ICreateEmail, EmailService>();
             builder.Services.AddScoped<ICoverLetter, CoverLetterService>();
+            builder.Services.AddScoped<ICreateEmail, EmailService>();
 
             var key = builder.Configuration["OpenAI:Key"];
             builder.Services.AddSingleton<Kernel>(sp =>

@@ -41,24 +41,5 @@ namespace ResumeAI.DTOs
             Links = new List<LinkDTO> { new LinkDTO() };
             Skills = new List<SkillDTO> { new SkillDTO() };
         }
-
-        public string BuildCombinedPersonalInfo()
-        {
-            var parts = new string?[]
-            {
-                FirstName,
-                SecondName,
-                LastName,
-                Title,
-                Email,
-                PhoneNumber,
-                Summary,
-                Address,
-                DateOfBirth,
-                JobTitle,
-                Id,
-            };
-            return string.Join(" | ", parts.Where(p => !string.IsNullOrWhiteSpace(p)));
-        }
     }
 }

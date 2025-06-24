@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using ResumeAI.DTOs;
+﻿using ResumeAI.DTOs;
 using ResumeAI.Models.Resume;
 
 namespace HTU_FinalProject.Interfaces

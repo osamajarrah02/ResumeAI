@@ -1,10 +1,9 @@
 ﻿using ResumeAI.Models.Person;
 
-namespace ResumeAI.Models.Email
+namespace ResumeAI.Models.CreateEmail
 {
     public class CreateEmail
     {
-        public int Id { get; set; }
         public string EmailType { get; set; }
         public string Subject { get; set; }
         public string RecipientName { get; set; }

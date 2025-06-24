@@ -1,0 +1,73 @@
+﻿body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to right, #f8f9fa, #e0eafc);
+    color: #333;
+    overflow-x: hidden;
+}
+
+.about-section {
+    padding: 80px 0;
+    text-align: center;
+    background-color: #fff;
+}
+
+.about-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #343a40;
+    animation: fadeDown 1s ease-out forwards;
+}
+
+.about-text {
+    font-size: 1.1rem;
+    max-width: 700px;
+    margin: 0 auto;
+    opacity: 0;
+    animation: fadeUp 1s ease-out 0.5s forwards;
+}
+
+@keyframes fadeDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.team-section {
+    padding: 60px 0;
+    background: #f1f3f5;
+}
+
+.team-member {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .team-member:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+.team-img {
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+}

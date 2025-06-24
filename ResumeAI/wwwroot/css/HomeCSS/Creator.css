@@ -1,0 +1,110 @@
+﻿body {
+    background: #ffffff;
+    color: #222;
+    font-family: 'Segoe UI', sans-serif;
+    overflow-x: hidden;
+}
+
+.hero-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    position: relative;
+    background: linear-gradient(135deg, #e0f7ff, #f9f9f9);
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.hero-content p {
+    font-size: 1.25rem;
+    margin-top: 20px;
+    opacity: 0.9;
+}
+
+.btn-modern {
+    background: linear-gradient(135deg, #66a6ff, #89f7fe);
+    border: none;
+    padding: 12px 24px;
+    font-weight: 600;
+    border-radius: 50px;
+    box-shadow: 0 6px 20px rgba(102, 166, 255, 0.3);
+    color: #fff;
+}
+
+.btn-outline-modern {
+    border: 2px solid #66a6ff;
+    color: #66a6ff;
+    background-color: transparent;
+    padding: 12px 24px;
+    font-weight: 600;
+    border-radius: 50px;
+    margin-left: 15px;
+}
+
+.info-section, .usage-section, .testimonial-section {
+    padding: 80px 20px;
+}
+
+.info-section {
+    background-color: #f9f9f9;
+}
+
+.usage-section {
+    background-color: #ffffff;
+}
+
+.testimonial-section {
+    background-color: #f1f6fb;
+}
+
+.testimonial-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.testimonial-stars i {
+    color: gold;
+}
+
+#creators {
+    background: white;
+}
+
+.creator-card {
+    border-radius: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    background: rgba(255, 255, 255, 0.05);
+    display: block;
+}
+
+    .creator-card:hover,
+    .creator-card:focus-visible {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(102, 166, 255, 0.4);
+        background: rgba(255, 255, 255, 0.12);
+        text-decoration: none;
+        outline: none;
+    }
+
+    .creator-card:active {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(102, 166, 255, 0.5);
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+.card-title {
+    letter-spacing: 0.05em;
+}
+/* Override btn-link default styles */
+.btn-link {
+    color: inherit;
+}

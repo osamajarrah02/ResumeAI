@@ -1,5 +1,4 @@
 ﻿using ResumeAI.Models.CoverLetter;
-using ResumeAI.Models.Email;
 using ResumeAI.Models.Portfolio;
 using ResumeAI.Models.Resume;
 
@@ -11,6 +10,5 @@ namespace ResumeAI.DTOs
         public List<ResumeDTO> Resumes { get; set; }
         public List<PortfolioDTO> Portfolios { get; set; }
         public List<CoverLetterDTO> CoverLetters { get; set; }
-        public List<CreateEmailDTO> Emails { get; set; }
     }
 }

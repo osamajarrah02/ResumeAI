@@ -1,6 +1,4 @@
 ﻿using ResumeAI.DTOs.Details;
-using ResumeAI.Models.CoverLetter.Details;
-using ResumeAI.Models.Resume.Details;
 
 namespace ResumeAI.DTOs
 {
